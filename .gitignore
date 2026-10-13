@@ -1,0 +1,56 @@
+# Environments & Virtual Envs
+.venv/
+env/
+venv/
+ENV/
+build/
+dist/
+.cache/
+
+# Kaggle credentials vault
+.kaggle/
+
+# Python caches and bytecode
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.pytest_cache/
+.coverage
+htmlcov/
+
+# Jupyter Notebook checkpoints
+.ipynb_checkpoints/
+
+# Reference documents and assignment PDFs
+*.pdf
+
+# Datasets (Prevent committing large painting images, archives, and generated splits)
+data/downloads/**
+!data/downloads/.gitkeep
+data/raw/**
+!data/raw/.gitkeep
+data/processed/**
+!data/processed/.gitkeep
+
+# Model checkpoints (Track trained weights for zero-download demo)
+models/**
+!models/svm_baseline.joblib
+!models/cnn_best.pth
+
+# Generated outputs & Evaluation benchmarks (Track evaluation artifacts for offline benchmark viewing)
+outputs/**
+!outputs/model_comparison.json
+!outputs/svm_vs_cnn_confusion_matrices.png
+!outputs/per_artist_f1_comparison.png
+
+# Logs
+*.log
+
+# IDE & OS-specific files
+.idea/
+.vscode/
+*.swp
+*.swo
+.DS_Store
+Thumbs.db

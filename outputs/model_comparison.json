@@ -1,0 +1,194 @@
+{
+  "dataset": "ikarus777/best-artworks-of-all-time (10 Artists)",
+  "total_test_samples": 200,
+  "test_samples_per_artist": 20,
+  "class_labels": [
+    "Albrecht_Durer",
+    "Alfred_Sisley",
+    "Edgar_Degas",
+    "Francisco_Goya",
+    "Pablo_Picasso",
+    "Paul_Gauguin",
+    "Pierre-Auguste_Renoir",
+    "Rembrandt",
+    "Titian",
+    "Vincent_van_Gogh"
+  ],
+  "summary": {
+    "svm_baseline": {
+      "paradigm": "Traditional ML (HSV Hist + Hu + GLCM -> PCA -> RBF SVM)",
+      "val_accuracy": 0.535,
+      "val_macro_f1": 0.5330352303523036,
+      "test_accuracy": 0.53,
+      "test_macro_f1": 0.520608436279168,
+      "test_macro_precision": 0.5302469197469197,
+      "test_macro_recall": 0.53,
+      "test_weighted_f1": 0.5206084362791681,
+      "test_correct": 106,
+      "test_incorrect": 94,
+      "mean_latency_ms": 18.450160500033235,
+      "median_latency_ms": 15.74925000386429
+    },
+    "cnn_transfer_learning": {
+      "paradigm": "Deep Learning (ResNet-18 ImageNet Transfer Learning)",
+      "val_accuracy": 0.71,
+      "val_macro_f1": 0.7103111096618988,
+      "test_accuracy": 0.705,
+      "test_macro_f1": 0.6987746891189062,
+      "test_macro_precision": 0.7171613123718388,
+      "test_macro_recall": 0.7050000000000001,
+      "test_weighted_f1": 0.6987746891189063,
+      "test_correct": 141,
+      "test_incorrect": 59,
+      "mean_latency_ms": 47.399088500169455,
+      "median_latency_ms": 44.48679999768501
+    },
+    "relative_performance": {
+      "accuracy_diff_percent": 17.5,
+      "macro_f1_diff": 0.1782,
+      "winner": "CNN Transfer Learning"
+    }
+  },
+  "per_class_test_results": {
+    "Albrecht_Durer": {
+      "svm": {
+        "precision": 0.8571428571428571,
+        "recall": 0.9,
+        "f1_score": 0.8780487804878049,
+        "support": 20
+      },
+      "cnn": {
+        "precision": 0.8571428571428571,
+        "recall": 0.9,
+        "f1_score": 0.8780487804878049,
+        "support": 20
+      }
+    },
+    "Alfred_Sisley": {
+      "svm": {
+        "precision": 0.6818181818181818,
+        "recall": 0.75,
+        "f1_score": 0.7142857142857143,
+        "support": 20
+      },
+      "cnn": {
+        "precision": 0.8181818181818182,
+        "recall": 0.9,
+        "f1_score": 0.8571428571428571,
+        "support": 20
+      }
+    },
+    "Edgar_Degas": {
+      "svm": {
+        "precision": 0.39285714285714285,
+        "recall": 0.55,
+        "f1_score": 0.4583333333333333,
+        "support": 20
+      },
+      "cnn": {
+        "precision": 0.64,
+        "recall": 0.8,
+        "f1_score": 0.7111111111111111,
+        "support": 20
+      }
+    },
+    "Francisco_Goya": {
+      "svm": {
+        "precision": 0.46153846153846156,
+        "recall": 0.3,
+        "f1_score": 0.36363636363636365,
+        "support": 20
+      },
+      "cnn": {
+        "precision": 0.625,
+        "recall": 0.5,
+        "f1_score": 0.5555555555555556,
+        "support": 20
+      }
+    },
+    "Pablo_Picasso": {
+      "svm": {
+        "precision": 0.25,
+        "recall": 0.15,
+        "f1_score": 0.1875,
+        "support": 20
+      },
+      "cnn": {
+        "precision": 0.6842105263157895,
+        "recall": 0.65,
+        "f1_score": 0.6666666666666666,
+        "support": 20
+      }
+    },
+    "Paul_Gauguin": {
+      "svm": {
+        "precision": 0.36363636363636365,
+        "recall": 0.4,
+        "f1_score": 0.38095238095238093,
+        "support": 20
+      },
+      "cnn": {
+        "precision": 0.6363636363636364,
+        "recall": 0.35,
+        "f1_score": 0.45161290322580644,
+        "support": 20
+      }
+    },
+    "Pierre-Auguste_Renoir": {
+      "svm": {
+        "precision": 0.75,
+        "recall": 0.45,
+        "f1_score": 0.5625,
+        "support": 20
+      },
+      "cnn": {
+        "precision": 0.7619047619047619,
+        "recall": 0.8,
+        "f1_score": 0.7804878048780488,
+        "support": 20
+      }
+    },
+    "Rembrandt": {
+      "svm": {
+        "precision": 0.5416666666666666,
+        "recall": 0.65,
+        "f1_score": 0.5909090909090909,
+        "support": 20
+      },
+      "cnn": {
+        "precision": 1.0,
+        "recall": 0.65,
+        "f1_score": 0.7878787878787878,
+        "support": 20
+      }
+    },
+    "Titian": {
+      "svm": {
+        "precision": 0.5238095238095238,
+        "recall": 0.55,
+        "f1_score": 0.5365853658536586,
+        "support": 20
+      },
+      "cnn": {
+        "precision": 0.6071428571428571,
+        "recall": 0.85,
+        "f1_score": 0.7083333333333334,
+        "support": 20
+      }
+    },
+    "Vincent_van_Gogh": {
+      "svm": {
+        "precision": 0.48,
+        "recall": 0.6,
+        "f1_score": 0.5333333333333333,
+        "support": 20
+      },
+      "cnn": {
+        "precision": 0.5416666666666666,
+        "recall": 0.65,
+        "f1_score": 0.5909090909090909,
+        "support": 20
+      }
+    }
+  }
+}
