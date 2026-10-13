@@ -21,7 +21,7 @@ The repository includes pre-trained model weights (`models/svm_baseline.joblib` 
 ### Step 1: Clone the repository
 
 ```bash
-git clone <repository-url>
+git clone (https://github.com/PES1UG24AM004/artist-identification-studio.git)
 cd Final
 ```
 
