@@ -30,22 +30,22 @@
       "median_latency_ms": 15.74925000386429
     },
     "cnn_transfer_learning": {
-      "paradigm": "Deep Learning (ResNet-18 ImageNet Transfer Learning)",
-      "val_accuracy": 0.71,
-      "val_macro_f1": 0.7103111096618988,
-      "test_accuracy": 0.705,
-      "test_macro_f1": 0.6987746891189062,
-      "test_macro_precision": 0.7171613123718388,
-      "test_macro_recall": 0.7050000000000001,
-      "test_weighted_f1": 0.6987746891189063,
-      "test_correct": 141,
-      "test_incorrect": 59,
-      "mean_latency_ms": 47.399088500169455,
-      "median_latency_ms": 44.48679999768501
+      "paradigm": "Deep Learning (ResNet-18 Layer 4 + Head Fine-Tuned)",
+      "val_accuracy": 0.81,
+      "val_macro_f1": 0.8083792698172827,
+      "test_accuracy": 0.82,
+      "test_macro_f1": 0.820021342633666,
+      "test_macro_precision": 0.8359857397504455,
+      "test_macro_recall": 0.82,
+      "test_weighted_f1": 0.820021342633666,
+      "test_correct": 164,
+      "test_incorrect": 36,
+      "mean_latency_ms": 39.56318349963112,
+      "median_latency_ms": 38.31334999995306
     },
     "relative_performance": {
-      "accuracy_diff_percent": 17.5,
-      "macro_f1_diff": 0.1782,
+      "accuracy_diff_percent": 29.0,
+      "macro_f1_diff": 0.2994,
       "winner": "CNN Transfer Learning"
     }
   },
@@ -58,9 +58,9 @@
         "support": 20
       },
       "cnn": {
-        "precision": 0.8571428571428571,
-        "recall": 0.9,
-        "f1_score": 0.8780487804878049,
+        "precision": 1.0,
+        "recall": 0.85,
+        "f1_score": 0.918918918918919,
         "support": 20
       }
     },
@@ -72,9 +72,9 @@
         "support": 20
       },
       "cnn": {
-        "precision": 0.8181818181818182,
-        "recall": 0.9,
-        "f1_score": 0.8571428571428571,
+        "precision": 0.8636363636363636,
+        "recall": 0.95,
+        "f1_score": 0.9047619047619048,
         "support": 20
       }
     },
@@ -86,9 +86,9 @@
         "support": 20
       },
       "cnn": {
-        "precision": 0.64,
-        "recall": 0.8,
-        "f1_score": 0.7111111111111111,
+        "precision": 0.8571428571428571,
+        "recall": 0.9,
+        "f1_score": 0.8780487804878049,
         "support": 20
       }
     },
@@ -100,9 +100,9 @@
         "support": 20
       },
       "cnn": {
-        "precision": 0.625,
-        "recall": 0.5,
-        "f1_score": 0.5555555555555556,
+        "precision": 0.8666666666666667,
+        "recall": 0.65,
+        "f1_score": 0.7428571428571429,
         "support": 20
       }
     },
@@ -114,9 +114,9 @@
         "support": 20
       },
       "cnn": {
-        "precision": 0.6842105263157895,
+        "precision": 0.7647058823529411,
         "recall": 0.65,
-        "f1_score": 0.6666666666666666,
+        "f1_score": 0.7027027027027027,
         "support": 20
       }
     },
@@ -128,9 +128,9 @@
         "support": 20
       },
       "cnn": {
-        "precision": 0.6363636363636364,
-        "recall": 0.35,
-        "f1_score": 0.45161290322580644,
+        "precision": 0.8666666666666667,
+        "recall": 0.65,
+        "f1_score": 0.7428571428571429,
         "support": 20
       }
     },
@@ -142,9 +142,9 @@
         "support": 20
       },
       "cnn": {
-        "precision": 0.7619047619047619,
-        "recall": 0.8,
-        "f1_score": 0.7804878048780488,
+        "precision": 0.8181818181818182,
+        "recall": 0.9,
+        "f1_score": 0.8571428571428571,
         "support": 20
       }
     },
@@ -157,8 +157,8 @@
       },
       "cnn": {
         "precision": 1.0,
-        "recall": 0.65,
-        "f1_score": 0.7878787878787878,
+        "recall": 0.9,
+        "f1_score": 0.9473684210526315,
         "support": 20
       }
     },
@@ -170,9 +170,9 @@
         "support": 20
       },
       "cnn": {
-        "precision": 0.6071428571428571,
+        "precision": 0.68,
         "recall": 0.85,
-        "f1_score": 0.7083333333333334,
+        "f1_score": 0.7555555555555555,
         "support": 20
       }
     },
@@ -184,9 +184,9 @@
         "support": 20
       },
       "cnn": {
-        "precision": 0.5416666666666666,
-        "recall": 0.65,
-        "f1_score": 0.5909090909090909,
+        "precision": 0.6428571428571429,
+        "recall": 0.9,
+        "f1_score": 0.75,
         "support": 20
       }
     }

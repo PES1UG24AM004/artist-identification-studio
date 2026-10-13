@@ -123,7 +123,7 @@ class TestDemoInterface(unittest.TestCase):
         self.assertIn("svm_baseline", bench["summary"])
         self.assertIn("cnn_transfer_learning", bench["summary"])
         self.assertEqual(bench["summary"]["svm_baseline"]["test_accuracy"], 0.53)
-        self.assertEqual(bench["summary"]["cnn_transfer_learning"]["test_accuracy"], 0.705)
+        self.assertEqual(bench["summary"]["cnn_transfer_learning"]["test_accuracy"], 0.82)
 
 
 if __name__ == "__main__":

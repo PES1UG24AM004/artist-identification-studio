@@ -507,7 +507,7 @@ SAMPLE_OPTIONS: Dict[str, str] = {
     "Pierre-Auguste Renoir - Impressionist Portrait": "data/raw/Pierre-Auguste_Renoir/Pierre-Auguste_Renoir_136.jpg",
     "Rembrandt - Baroque Chiaroscuro": "data/raw/Rembrandt/Rembrandt_250.jpg",
     "Titian - High Renaissance Colorito": "data/raw/Titian/Titian_42.jpg",
-    "Vincent van Gogh - Expressive Impasto": "data/raw/Vincent_van_Gogh/Vincent_van_Gogh_183.jpg"
+    "Vincent van Gogh — Nuenen-era Monochrome Study": "data/raw/Vincent_van_Gogh/Vincent_van_Gogh_183.jpg"
 }
 
 
@@ -664,7 +664,7 @@ def main():
                         model_tag="Deep Learning - ResNet-18",
                         top_predictions=cnn_top3,
                         latency_ms=cnn_latency,
-                        architecture_summary="ImageNet-pretrained ResNet-18 backbone (frozen) fine-tuned on painting dataset with 10-class linear classification head.",
+                        architecture_summary="ImageNet-pretrained ResNet-18 with layer4 and classification head fine-tuned on painting dataset (82.0% test accuracy).",
                         score_label="Softmax Model Score",
                         calibration_note="Note: Softmax output reflects relative normalized logits, not uncalibrated real-world probabilities."
                     )
@@ -702,7 +702,7 @@ def main():
                     model_tag="Deep Learning - ResNet-18",
                     top_predictions=cnn_top3,
                     latency_ms=cnn_latency,
-                    architecture_summary="ImageNet-pretrained ResNet-18 backbone (frozen) fine-tuned on painting dataset with 10-class linear classification head.",
+                    architecture_summary="ImageNet-pretrained ResNet-18 with layer4 and classification head fine-tuned on painting dataset (82.0% test accuracy).",
                     score_label="Softmax Model Score",
                     calibration_note="Note: Softmax output reflects relative normalized logits, not uncalibrated real-world probabilities."
                 )
@@ -807,8 +807,8 @@ def main():
         with st.expander("Methodology & Architectural Details", expanded=False):
             st.markdown(r"""
             - **Classical ML Pipeline:** Extracts a 559-dimensional visual descriptor combining a 3D HSV Color Histogram (512 dimensions), 7 Hu Invariant Shape Moments, and 40 Gray-Level Co-occurrence Matrix (GLCM) texture descriptors. Features are standardized via `StandardScaler`, reduced via `PCA(100)`, and classified using an RBF-kernel Support Vector Machine ($C=1.0$, $\gamma='scale'$).
-            - **Deep Learning Pipeline:** Leverages transfer learning on an ImageNet-pretrained `ResNet-18` backbone with frozen convolutional feature extractors, training a 10-class linear classification head using `AdamW` (learning rate $= 10^{-3}$, weight decay $= 10^{-4}$) for 5 epochs on CPU with cross-entropy loss.
-            - **Latency vs. Accuracy Tradeoff:** While ResNet-18 outperforms the SVM baseline by **+17.50% test accuracy** and **+0.1782 macro F1**, the classical SVM achieves **2.57x lower mean CPU latency** (18.45 ms vs 47.40 ms), making it suitable for resource-constrained environments where rapid approximate classification is needed.
+            - **Deep Learning Pipeline:** Leverages transfer learning on an ImageNet-pretrained `ResNet-18` backbone, fine-tuning the final residual block (`layer4`) and a 10-class linear classification head using `AdamW` (differential learning rates: $10^{-4}$ for `layer4`, $10^{-3}$ for `fc`; weight decay $= 10^{-4}$) with a cosine annealing schedule on CPU with cross-entropy loss.
+            - **Latency vs. Accuracy Tradeoff:** While the fine-tuned ResNet-18 outperforms the SVM baseline by **+29.00% test accuracy** (82.00% vs 53.00%) and **+0.2994 macro F1** (0.8200 vs 0.5206), the classical SVM achieves lower mean CPU latency (18.45 ms vs 39.56 ms), illustrating the trade-off between lightweight handcrafted feature extraction and deep hierarchical representation learning.
             """)
 
 

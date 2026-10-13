@@ -1,6 +1,6 @@
 # Artist Identification Studio: Comparative Evaluation of Classical Machine Learning and Deep Learning
 
-Artist Identification Studio is an academic research platform for multi-class visual artwork attribution, comparing classical machine learning (handcrafted visual feature engineering with an RBF Support Vector Machine) against deep transfer learning (a fine-tuned ResNet-18 convolutional neural network). Evaluated on 2,000 paintings across 10 historical artists from the Kaggle "Best Artworks of All Time" collection, the project demonstrates how hierarchical neural representations outperform manual color, texture, and shape descriptors on complex artistic styles while contrasting their respective computational trade-offs.
+Artist Identification Studio is an academic research platform for multi-class visual artwork attribution, comparing classical machine learning (handcrafted visual feature engineering with an RBF Support Vector Machine) against deep transfer learning (a fine-tuned ResNet-18 convolutional neural network). Evaluated on 2,000 paintings across 10 historical artists from the Kaggle "Best Artworks of All Time" collection, the project demonstrates how hierarchical neural representations with selective convolutional fine-tuning outperform manual color, texture, and shape descriptors on complex artistic styles while contrasting their respective computational trade-offs.
 
 ---
 
@@ -16,7 +16,7 @@ Artist Identification Studio is an academic research platform for multi-class vi
 
 ## Quick Start (No Dataset Download Required)
 
-The repository includes pre-trained model weights (`models/svm_baseline.joblib` [1.51 MB] and `models/cnn_best.pth` [42.77 MB]) and verified evaluation artifacts. **You do NOT need to download the Kaggle dataset or retrain models to run the application or tests.**
+The repository includes pre-trained model checkpoints (`models/svm_baseline.joblib` [1.51 MB] and the promoted production checkpoint `models/cnn_best.pth` [42.78 MB]), an archived baseline checkpoint (`models/experiments/cnn_baseline_head_only.pth` [42.77 MB]), and verified evaluation artifacts. **You do NOT need to download the Kaggle dataset or retrain models to run the demonstration application or unit tests.**
 
 ### Step 1: Clone the repository
 
@@ -46,7 +46,7 @@ This script:
 run-tests.cmd
 ```
 
-Executes all 23 unit and integration tests across data preparation, feature extraction, SVM training, CNN transfer learning, and the demonstration interface.
+Executes all 28 unit and integration tests across data preparation, feature extraction, SVM training, CNN transfer learning, fine-tuning gradient verification, and the demonstration interface.
 
 ### Step 4: Launch the interactive studio
 
@@ -66,63 +66,117 @@ To stop the application, press `Ctrl+C` in the terminal.
 
 ## What the Application Does
 
-Artist Identification Studio features a streamlined dark-mode research interface organized into two core workflows:
+Artist Identification Studio features a polished dark-mode academic interface organized into two core workflows:
 
 ### 1. Attribution Analysis Tab
 - **Custom Image Upload:** Drag and drop any painting file (JPEG, PNG, WebP) for instant artist attribution.
-- **Curated Validation Samples:** If the raw dataset is present, select from 10 pre-configured historical paintings spanning all 10 artists. If running on a fresh clone without the dataset, the selector gracefully prompts for custom image uploads.
+- **Curated Validation Samples:** If the raw dataset is present, select from 10 pre-configured historical paintings spanning all 10 artists. (Note: The curated Van Gogh sample `Vincent_van_Gogh_183.jpg` is accurately labeled as a *"Nuenen-era Monochrome Study"*). If running on a fresh clone without the raw dataset, the selector gracefully prompts for custom image uploads.
 - **Multi-Model Attribution View:** Compare predictions side-by-side or inspect either model individually:
-  - **Traditional ML:** Evaluates a 559-dimensional feature vector combining 512 HSV color histogram bins, 7 Hu invariant moments, and 40 GLCM texture features passed through PCA dimensionality reduction and an RBF-kernel SVM.
-  - **Deep Learning:** Evaluates a 224x224 RGB input through a transfer-learned ResNet-18 convolutional backbone.
-- **Top-3 Candidates & Confidence:** Displays top-3 ranked artist predictions with calibrated class probabilities.
-- **CPU Inference Latency:** Displays real-time single-image inference latency in milliseconds.
-- **Deterministic Caching:** Prediction caching guarantees that switching between model views does not trigger redundant forward passes.
+  - **Traditional ML (SVM Baseline):** Evaluates a 559-dimensional feature vector combining 512 HSV color histogram bins, 7 Hu invariant moments, and 40 GLCM texture features passed through `StandardScaler`, `PCA(100)`, and an RBF-kernel SVM.
+  - **Deep Learning (Fine-Tuned ResNet-18):** Evaluates a 224x224 RGB input through an ImageNet-pretrained ResNet-18 with its final residual block (`layer4`) and 10-class linear classification head fine-tuned for painting attribution.
+- **Top-3 Candidates & Confidence:** Displays top-3 ranked artist predictions with decision confidence.
+- **CPU Inference Latency:** Displays real-time single-image CPU inference latency in milliseconds.
+- **Deterministic Caching:** Streamlit caching guarantees that switching between model views does not trigger redundant forward passes.
 
 ### 2. Model Benchmark & Evaluation Tab
 - **Held-Out Test Set Metrics:** Displays verified performance metrics on 200 held-out test paintings (20 per artist) withheld during all training and tuning stages.
 - **Side-by-Side Normalized Confusion Matrices:** High-resolution confusion matrices illustrating inter-artist confusions for both models.
 - **Per-Artist F1-Score Breakdown:** Comparative bar chart highlighting class-by-class strengths and weaknesses across all 10 artists.
-- **Comparative Analysis Table:** Side-by-side breakdown of accuracy, macro F1, macro precision, macro recall, and inference speed.
+- **Comparative Analysis Table:** Side-by-side breakdown of accuracy, macro F1, macro precision, macro recall, and CPU inference speed.
+
+---
+
+## Experimental Dataset and Protocol
+
+The dataset consists of 2,000 paintings spanning 10 balanced artist classes (200 paintings per artist) sampled from the Kaggle *Best Artworks of All Time* collection:
+
+- **Albrecht Dürer** (Northern Renaissance / Printmaking)
+- **Alfred Sisley** (Impressionist Landscapes)
+- **Edgar Degas** (Impressionism / Ballet & Figure Studies)
+- **Francisco Goya** (Romanticism / Dark Period & Etchings)
+- **Pablo Picasso** (Cubism / Early Modernism)
+- **Paul Gauguin** (Post-Impressionist Synthetism)
+- **Pierre-Auguste Renoir** (Impressionist Portraits)
+- **Rembrandt** (Dutch Baroque / Chiaroscuro)
+- **Titian** (Venetian Renaissance Colorito)
+- **Vincent van Gogh** (Post-Impressionism / Impasto & Early Dutch Studies)
+
+### Leakage-Free Stratified Splitting (80 / 10 / 10)
+- **Training Split:** 1,600 paintings (160 per artist across 10 balanced classes).
+- **Validation Split:** 200 paintings (20 per artist across 10 balanced classes) — used exclusively for hyperparameter tuning, checkpoint tracking, and early stopping.
+- **Held-Out Test Split:** 200 paintings (20 per artist across 10 balanced classes) — strictly preserved and evaluated only once per final model evaluation.
 
 ---
 
 ## Measured Experimental Results
 
-Both models were trained on 1,600 images (160/artist), tuned on 200 validation images (20/artist), and evaluated on an unbiased held-out test set of 200 paintings (20/artist).
+### 1. High-Level Performance Comparison: Validation vs. Held-Out Test Splits
 
-### Overall Test Performance Summary (N=200 Held-Out Artworks)
+Validation and held-out test metrics are strictly separated below:
 
-| Evaluation Metric | SVM Baseline (RBF + PCA-100) | CNN Transfer Learning (ResNet-18) | Advantage / Delta |
-| :--- | :---: | :---: | :---: |
-| **Validation Accuracy** | 53.50% | 71.00% | +17.50% (CNN) |
-| **Test Accuracy** | **53.00%** (106 / 200) | **70.50%** (141 / 200) | **+17.50% (CNN)** |
-| **Test Macro F1-Score** | 0.5206 | **0.6988** | +0.1782 (CNN) |
-| **Test Weighted F1-Score** | 0.5206 | **0.6988** | +0.1782 (CNN) |
-| **Test Macro Precision** | 0.5302 | **0.7172** | +0.1870 (CNN) |
-| **Test Macro Recall** | 0.5300 | **0.7050** | +0.1750 (CNN) |
-| **Mean Single-Image Latency (CPU)** | **18.45 ms** | 47.40 ms | +28.95 ms (SVM is 2.6x faster) |
-| **Model Checkpoint Size** | **1.51 MB** | 42.77 MB | SVM is ~28x smaller |
+| Split | Metric | Classical SVM Baseline | Original CNN (Head Only) | Promoted CNN (`layer4` Fine-Tuned) | Delta (Promoted vs. Original CNN) |
+| :--- | :--- | :---: | :---: | :---: | :---: |
+| **Validation**<br>*(Tuning Split, N=200)* | **Accuracy** | 53.50% | 71.00% | **81.00%** | **+10.00%** |
+| | **Macro F1** | 0.5330 | 0.7103 | **0.8084** | **+0.0981** |
+| | **Van Gogh Recall** | 60.00% | 55.00% | **75.00%** | **+20.00%** |
+| | **Van Gogh F1** | 0.5333 | 0.5366 | **0.6977** | **+0.1611** |
+| **Held-Out Test**<br>*(Untouched Split, N=200)* | **Accuracy** | 53.00% (106/200) | 70.50% (141/200) | **82.00% (164/200)** | **+11.50%** |
+| | **Macro F1** | 0.5206 | 0.6988 | **0.8200** | **+0.1212** |
+| | **Macro Precision** | 0.5302 | 0.7172 | **0.8360** | **+0.1188** |
+| | **Macro Recall** | 0.5300 | 0.7050 | **0.8200** | **+0.1150** |
+| | **Van Gogh Recall** | 60.00% (12/20) | 65.00% (13/20) | **90.00% (18/20)** | **+25.00%** |
+| | **Van Gogh F1** | 0.5333 | 0.5909 | **0.7500** | **+0.1591** |
+| | **Mean CPU Latency** | **18.45 ms** | 42.45 ms | **39.56 ms** | Hardware-dependent |
 
-### Per-Artist Class Breakdown on Held-Out Test Data
+### 2. Per-Artist Breakdown on Held-Out Test Data (N=20 Test Artworks per Artist)
 
-| Target Artist Class | Art Movement / Style | SVM Precision | SVM Recall | SVM F1 | CNN Precision | CNN Recall | CNN F1 | F1 Delta |
-| :--- | :--- | :---: | :---: | :---: | :---: | :---: | :---: | :---: |
-| **Albrecht Durer** | Northern Renaissance / Printmaking | 0.8571 | 0.9000 | **0.8780** | 0.8571 | 0.9000 | **0.8780** | Tie (0.0000) |
-| **Alfred Sisley** | Impressionist Landscape | 0.6818 | 0.7500 | 0.7143 | 0.8182 | 0.9000 | **0.8571** | +0.1428 (CNN) |
-| **Edgar Degas** | Impressionism / Ballet & Figure | 0.3929 | 0.5500 | 0.4583 | 0.6400 | 0.8000 | **0.7111** | +0.2528 (CNN) |
-| **Francisco Goya** | Romanticism / Dark Period | 0.4615 | 0.3000 | 0.3636 | 0.6250 | 0.5000 | **0.5556** | +0.1920 (CNN) |
-| **Pablo Picasso** | Cubism / Modernism | 0.2500 | 0.1500 | 0.1875 | 0.6842 | 0.6500 | **0.6667** | +0.4792 (CNN) |
-| **Paul Gauguin** | Post-Impressionist Synthetism | 0.3636 | 0.4000 | 0.3810 | 0.6364 | 0.3500 | **0.4516** | +0.0706 (CNN) |
-| **Pierre-Auguste Renoir** | Impressionist Portraits | 0.7500 | 0.4500 | 0.5625 | 0.7619 | 0.8000 | **0.7805** | +0.2180 (CNN) |
-| **Rembrandt** | Dutch Baroque / Chiaroscuro | 0.5417 | 0.6500 | 0.5909 | 1.0000 | 0.6500 | **0.7879** | +0.1970 (CNN) |
-| **Titian** | High Renaissance Venetian School | 0.5238 | 0.5500 | 0.5366 | 0.6071 | 0.8500 | **0.7083** | +0.1717 (CNN) |
-| **Vincent van Gogh** | Post-Impressionist Impasto | 0.4800 | 0.6000 | 0.5333 | 0.5417 | 0.6500 | **0.5909** | +0.0576 (CNN) |
+| Target Artist Class | SVM Test F1 | Original CNN Test F1 | Promoted CNN Test F1 | CNN Test Recall | CNN Test Precision | F1 Advantage (vs. Orig CNN) |
+| :--- | :---: | :---: | :---: | :---: | :---: | :---: |
+| **Paul Gauguin** | 0.3810 | 0.4516 | **0.7429** | 65.0% | 86.7% | **+0.2912** |
+| **Francisco Goya** | 0.3636 | 0.5556 | **0.7429** | 65.0% | 86.7% | **+0.1873** |
+| **Edgar Degas** | 0.4583 | 0.7111 | **0.8780** | 90.0% | 85.7% | **+0.1669** |
+| **Rembrandt** | 0.5909 | 0.7879 | **0.9474** | 90.0% | 100.0% | **+0.1595** |
+| **Vincent van Gogh** | 0.5333 | 0.5909 | **0.7500** | 90.0% | 64.3% | **+0.1591** |
+| **Pierre-Auguste Renoir** | 0.5625 | 0.7805 | **0.8571** | 90.0% | 81.8% | **+0.0767** |
+| **Alfred Sisley** | 0.7143 | 0.8571 | **0.9048** | 95.0% | 86.4% | **+0.0476** |
+| **Titian** | 0.5366 | 0.7083 | **0.7556** | 85.0% | 68.0% | **+0.0472** |
+| **Albrecht Dürer** | 0.8780 | 0.8780 | **0.9189** | 85.0% | 100.0% | **+0.0409** |
+| **Pablo Picasso** | 0.1875 | 0.6667 | **0.7027** | 65.0% | 76.5% | **+0.0360** |
 
-### Key Experimental Insights
-1. **Representational Hierarchy:** ResNet-18 achieves a substantial +17.50% test accuracy gain over the SVM baseline because convolutional kernels capture structural brushwork, compositional rhythm, and multi-scale texture features that fixed global descriptors compress away.
-2. **Distinctive Visual Signatures:** Artists with stark, unique visual signatures (e.g., Albrecht Dürer's high-contrast woodcut engravings) attained high F1-scores on both paradigms (0.8780 F1).
-3. **Impressionist and Complex Styles:** Pablo Picasso presented the highest challenge for classical feature engineering (0.1875 SVM F1 vs. 0.6667 CNN F1), where manual color histograms and Hu moments failed to capture multifaceted abstract geometry across Picasso's varied stylistic periods.
-4. **Efficiency vs. Accuracy:** The SVM baseline executes single-image feature extraction and classification in 18.45 ms on CPU with a 1.51 MB footprint, making it suitable for edge deployments where deep learning runtimes are constrained.
+*Every single one of the 10 artist classes improved in test F1-score.*
+
+### 3. Statistical Significance Analysis (Paired Test Set Evaluation, N=200)
+
+- **Paired Contingency Table:**
+  - Both models correct: $136$ paintings
+  - Both models incorrect: $31$ paintings
+  - Discordant pairs: $33$ paintings ($28$ where fine-tuned won vs. $5$ where baseline won, a **$5.6 : 1$ improvement ratio**).
+  - Net gain: $+23$ correctly attributed test paintings.
+- **McNemar Test for Paired Proportions:**
+  - Continuity-corrected $\chi^2$ statistic: $\mathbf{14.6667}$ ($p = 1.28 \times 10^{-4}$)
+  - Exact Binomial two-sided test: $\mathbf{p = 6.62 \times 10^{-5}}$ ($p < 0.0001$)
+  - *Result:* Rejects the null hypothesis of equal error rates with high statistical significance ($\alpha = 0.001$).
+- **10,000-Round Empirical Bootstrap 95% Confidence Intervals:**
+  - $\Delta \text{Accuracy} = \text{Acc}_{\text{FT}} - \text{Acc}_{\text{Base}}$: Point estimate **$+11.50\%$**, $95\%\text{ CI } = [\mathbf{+6.00\%}, \mathbf{+17.00\%}]$ (strictly positive, excludes zero).
+  - $\Delta \text{Macro F1} = \text{F1}_{\text{FT}} - \text{F1}_{\text{Base}}$: Point estimate **$+0.1212$**, $95\%\text{ CI } = [\mathbf{+0.0679}, \mathbf{+0.1789}]$ (strictly positive, excludes zero).
+
+---
+
+## Architectural & Engineering Evolution
+
+### Why the Initial CNN Failed on Certain Van Gogh Paintings
+During initial diagnostic analysis of `Vincent_van_Gogh_266.jpg` (*Weaver at the Loom*, an 1884 monochrome/sepia study from Van Gogh's early Dutch period in Nuenen), the baseline CNN incorrectly attributed it to Francisco Goya with 67.2% softmax score:
+1. **Intra-Class Stylistic Variance:** Van Gogh's oeuvre contains two starkly distinct visual modes: early sombre Dutch realism / monochrome charcoal studies (1881–1885) and late chromatic French Post-Impressionism with vibrant impasto (1886–1890).
+2. **Frozen Backbone Bottleneck:** When the ResNet-18 convolutional backbone is 100% frozen, the single linear classification head ($5,130$ weights) must find a single linear hyperplane. It associates Van Gogh primarily with high-chroma Post-Impressionist signatures and misprojects low-chroma chiaroscuro interior studies into Goya's dark Romanticism cluster.
+
+### The Fine-Tuning Solution
+1. **Selective Layer Freezing:** Keeps `conv1`, `bn1`, and residual stages `layer1`, `layer2`, and `layer3` frozen ($2.78\text{ M}$ parameters) to preserve generic low-level edge, contour, and corner primitives.
+2. **Convolutional Unfreezing:** Unfreezes `layer4` ($8.39\text{ M}$ parameters) alongside the 10-class linear head. This allows higher-level receptive fields to adapt from ImageNet natural objects to domain-specific artistic brushstrokes, line-work, and canvas textures.
+3. **Differential Learning Rates:**
+   - `layer4`: $\mathbf{1 \times 10^{-4}}$ (conservative rate preventing catastrophic forgetting).
+   - classification head (`fc`): $\mathbf{1 \times 10^{-3}}$ (rapid convergence on class boundaries).
+4. **Regularization & Schedule:** `AdamW` (weight decay $= 10^{-4}$) with `CosineAnnealingLR` schedule and validation early stopping ($patience=4$).
+5. **Conservative Augmentation:** `RandomResizedCrop(scale=(0.85, 1.0))`, horizontal flipping, and mild color jitter ($0.08$) ensure composition and tonal characteristics are not distorted.
 
 ---
 
@@ -138,11 +192,21 @@ Final/
 │   └── processed/                   # Stratified manifests directory (.gitkeep tracked)
 ├── models/
 │   ├── svm_baseline.joblib          # Trained Classical SVM pipeline checkpoint (1.51 MB)
-│   └── cnn_best.pth                 # Trained ResNet-18 model weights checkpoint (42.77 MB)
+│   ├── cnn_best.pth                 # Promoted Fine-Tuned ResNet-18 production checkpoint (42.78 MB)
+│   └── experiments/
+│       └── cnn_baseline_head_only.pth # Archived baseline ResNet-18 frozen-backbone checkpoint (42.77 MB)
 ├── outputs/
-│   ├── model_comparison.json        # Unified test benchmark metrics manifest
+│   ├── model_comparison.json        # Production held-out test benchmark metrics manifest
 │   ├── svm_vs_cnn_confusion_matrices.png # Side-by-side normalized test confusion matrices
-│   └── per_artist_f1_comparison.png # Per-artist F1-score comparison chart
+│   ├── per_artist_f1_comparison.png # Per-artist F1-score comparison chart
+│   ├── per_class_metrics_comparison.csv # Production class-by-class metrics table
+│   └── experiments/
+│       ├── test_evaluation_comparison.json   # Full paired statistical test report (McNemar & Bootstrap)
+│       ├── test_confusion_matrices.png       # Test confusion matrices (Baseline vs. Fine-Tuned)
+│       ├── test_per_artist_f1_comparison.png # Test F1 bar chart (Baseline vs. Fine-Tuned)
+│       ├── cnn_finetune_val_metrics.json     # Validation metrics for fine-tuned checkpoint
+│       ├── cnn_finetune_confusion_matrix.png # Validation confusion matrix
+│       └── cnn_finetune_learning_curves.png  # Training and validation loss/accuracy curves
 ├── src/
 │   ├── __init__.py                  # Package marker
 │   ├── app.py                       # Interactive Streamlit studio application
@@ -156,8 +220,10 @@ Final/
 │   ├── models/
 │   │   ├── __init__.py              # Subpackage marker
 │   │   ├── train_svm.py             # Feature caching, PCA, CV hyperparameter tuning, and SVM training
-│   │   ├── train_cnn.py             # Transfer learning training and validation loop (ResNet-18)
-│   │   └── evaluate_comparison.py   # Held-out test evaluation, confusion matrices, and comparisons
+│   │   ├── train_cnn.py             # Transfer learning baseline training loop (frozen backbone)
+│   │   ├── train_cnn_finetune.py    # Layer 4 differential fine-tuning pipeline
+│   │   ├── evaluate_comparison.py   # Production held-out test evaluation
+│   │   └── evaluate_test_finetune.py # Dedicated comparative evaluation with McNemar & Bootstrap testing
 │   └── utils/
 │       ├── __init__.py              # Subpackage marker
 │       └── evaluate.py              # Metrics computation, timing, and plot generation helpers
@@ -166,7 +232,8 @@ Final/
 │   ├── test_make_dataset.py         # Unit tests for image verification and stratified splitting
 │   ├── test_svm.py                  # Unit tests for feature extraction and SVM pipeline
 │   ├── test_cnn.py                  # Unit tests for ResNet-18 architecture and frozen backbone
-│   └── test_app.py                  # Integration tests for Streamlit caching and inference parity
+│   ├── test_finetune.py             # Unit tests for Layer 4 gradient unfreezing and checkpoint parity
+│   └── test_app.py                  # Integration tests for Streamlit caching, inference, and benchmarks
 ├── .gitignore                       # Git exclusion rules (data, virtualenvs, caches, logs, PDFs)
 ├── requirements.txt                 # Project dependency specifications
 ├── setup.cmd                        # Automated Windows environment and dependency setup script
@@ -179,82 +246,54 @@ Final/
 
 ## Full Experiment Reproduction (Optional Workflow)
 
-To reproduce the complete machine learning experiment from scratch (downloading raw data, generating splits, extracting features, training both models, and computing test metrics):
+To reproduce the machine learning pipelines from scratch using the local dataset:
 
-### 1. Dataset Acquisition
-
-You can acquire the dataset using either of the following approaches:
-
-**Option A: Official Kaggle CLI (Recommended for Reliability)**
-1. Place your Kaggle API key at `~/.kaggle/kaggle.json` or `.kaggle/kaggle.json`.
-2. Download and unzip the archive:
-   ```cmd
-   kaggle datasets download -d ikarus777/best-artworks-of-all-time -p data/downloads --unzip
-   ```
-3. Copy the 10 target artist folders from `data/downloads/resized/resized/` into `data/raw/`.
-
-**Option B: Selective HTTP Range Script**
-The repository includes a custom acquisition pipeline (`src/data/download_dataset.py`) that uses HTTP Range headers to stream only the 200 resized images per target artist directly from the remote archive:
-```cmd
-.venv\Scripts\python.exe src/data/download_dataset.py
-```
-*Note:* This script relies on the ZIP central directory offset of Version 1 of the dataset on Kaggle. If the remote archive structure is updated by the author, use Option A above.
+### 1. Dataset Acquisition (If Not Present)
+If downloading raw images:
+- **Kaggle CLI:**
+  ```cmd
+  kaggle datasets download -d ikarus777/best-artworks-of-all-time -p data/downloads --unzip
+  ```
+- Copy the 10 target artist folders from `data/downloads/resized/resized/` into `data/raw/`.
 
 ### 2. Verify and Split the Dataset
-Perform SHA-256 deduplication and generate the deterministic 80/10/10 stratified split:
-
 ```cmd
 .venv\Scripts\python.exe src/data/make_dataset.py
 ```
-
-Outputs: `data/processed/dataset_manifest.csv`, `dataset_manifest.json`, and `dataset_summary.json`.
+Generates `data/processed/dataset_manifest.csv` with the fixed 80/10/10 split.
 
 ### 3. Train the Classical SVM Baseline
-Extract 559-dimensional visual descriptors, tune hyperparameters with 3-fold cross validation, and evaluate on validation data:
-
 ```cmd
 .venv\Scripts\python.exe src/models/train_svm.py
 ```
+Outputs `models/svm_baseline.joblib` and `outputs/svm_confusion_matrix.png`.
 
-Outputs: `models/svm_baseline.joblib` and `outputs/svm_confusion_matrix.png`.
-
-### 4. Train the CNN Transfer Learning Model
-Fine-tune the linear head on frozen ResNet-18 ImageNet backbone:
-
+### 4. Train the Baseline CNN (Head Only)
 ```cmd
 .venv\Scripts\python.exe src/models/train_cnn.py
 ```
+Trains the frozen-backbone linear probe, saving checkpoints to `models/cnn_best.pth`.
 
-Outputs: `models/cnn_best.pth`, `outputs/cnn_learning_curves.png`, and `outputs/cnn_confusion_matrix.png`.
-
-### 5. Run Comparative Evaluation on Held-Out Test Set
-Evaluate both models on the held-out 200 test paintings:
-
+### 5. Run Layer 4 Fine-Tuning
 ```cmd
-.venv\Scripts\python.exe src/models/evaluate_comparison.py
+.venv\Scripts\python.exe src/models/train_cnn_finetune.py
 ```
+Starts from `models/experiments/cnn_baseline_head_only.pth`, trains `layer4` and `fc` with differential learning rates, and writes experimental candidate checkpoints strictly under `models/experiments/` without modifying production checkpoints.
 
-Outputs: `outputs/model_comparison.json`, `outputs/svm_vs_cnn_confusion_matrices.png`, and `outputs/per_artist_f1_comparison.png`.
+### 6. Run Comparative Held-Out Evaluation
+```cmd
+.venv\Scripts\python.exe src/models/evaluate_test_finetune.py
+```
+Computes paired test predictions, McNemar tests, bootstrap confidence intervals, and side-by-side matrices under `outputs/experiments/`.
 
 ---
 
-## Modifying and Extending Models
+## Important Scope, Authenticity, and Academic Disclaimers
 
-The modular architecture allows straightforward customization of features, models, and hyperparameters:
-
-### 1. Extending Handcrafted Features (`src/features/extract_features.py`)
-- **Color Descriptors:** Modify `extract_color_histogram` to adjust HSV binning or evaluate alternative color spaces (e.g., CIE Lab).
-- **Texture Descriptors:** Modify `extract_glcm_features` to add additional GLCM distances, angles, or Local Binary Patterns (LBP).
-- **Edge / Shape Descriptors:** Add Gabor filter responses or Histogram of Oriented Gradients (HOG) by concatenating vectors inside `extract_image_features`.
-
-### 2. Adjusting the SVM Pipeline (`src/models/train_svm.py`)
-- **Dimensionality Reduction:** Modify the PCA component count (`PCA(n_components=100)`) or test kernel PCA.
-- **Hyperparameter Grid:** Adjust the parameter grid (`PARAM_GRID`) in `tune_and_train_svm` to explore alternate kernels (`linear`, `poly`), degrees, or regularization values `C`.
-
-### 3. Modifying CNN Backbones (`src/models/train_cnn.py`)
-- **Backbone Selection:** Swap `resnet18(weights=...)` with alternate lightweight backbones such as `mobilenet_v3_small` or `resnet50`.
-- **Fine-Tuning:** Unfreeze specific convolutional blocks (e.g., `layer4`) before training by modifying parameter `requires_grad` flags.
-- **Training Parameters:** Adjust learning rates, batch size, weight decay, or learning rate schedulers in `train_model`.
+1. **Non-Authentication Disclaimer:** **This model does not establish the historical authenticity, provenance, or physical authorship of any artwork.** It is a closed-world, 10-class visual pattern classifier trained on digitized museum reproductions. Given an input image, it outputs normalized similarity scores across the 10 pre-defined artist classes.
+2. **Generalization Scope:** The measured 82.0% held-out test accuracy applies specifically to the 200 held-out test paintings from the *Best Artworks of All Time* distribution. It does not imply universal 82% accuracy on outside datasets, unfamiliar art movements, private collections, or non-painting mediums.
+3. **Statistical Sample Size:** With 20 test paintings per artist, individual class metrics carry an inherent margin of error ($\pm 5\%$ per painting). While aggregate statistical tests (McNemar $p < 0.0001$, Bootstrap 95% CI $[+6.0\%, +17.0\%]$) demonstrate that the fine-tuning improvement is statistically robust, individual predictions should be interpreted as probabilistic machine indications rather than definitive attributions.
+4. **Hardware-Dependent Latency:** CPU inference latencies (mean $\approx 39.6\text{ ms}$ for CNN, $\approx 18.5\text{ ms}$ for SVM) were measured on a modern multi-core x86-64 CPU and will vary across different processors and background operating system loads.
 
 ---
 
@@ -265,36 +304,5 @@ The modular architecture allows straightforward customization of features, model
 - **Source:** [Kaggle Dataset: ikarus777/best-artworks-of-all-time](https://www.kaggle.com/datasets/ikarus777/best-artworks-of-all-time)
 - **Dataset License:** Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International (CC BY-NC-SA 4.0).
 - **Target Artists Included:**
-  - Albrecht Dürer (Northern Renaissance)
-  - Alfred Sisley (Impressionism)
-  - Edgar Degas (Impressionism)
-  - Francisco Goya (Romanticism)
-  - Pablo Picasso (Cubism / Modernism)
-  - Paul Gauguin (Post-Impressionism)
-  - Pierre-Auguste Renoir (Impressionism)
-  - Rembrandt (Dutch Baroque)
-  - Titian (Venetian Renaissance)
-  - Vincent van Gogh (Post-Impressionism)
-- **Licensing Context:** The underlying historical paintings were created between the 15th and early 20th centuries. The digitized reproductions in this collection are shared under CC BY-NC-SA 4.0 for non-commercial research and educational purposes. It remains an unsettled legal question whether trained machine learning weights qualify as adapted material / derivative works under CC BY-NC-SA 4.0 or non-copyrightable statistical parameters. Consequently, retaining these model checkpoints (`models/svm_baseline.joblib` and `models/cnn_best.pth`) in this repository is intended strictly for private academic course evaluation, and any future public or commercial redistribution requires separate licensing review.
-
----
-
-## Limitations & Troubleshooting
-
-### Known Limitations
-- **Stylistic Overlap:** The highest misclassification rate occurs between Impressionist contemporaries (Alfred Sisley, Pierre-Auguste Renoir, Edgar Degas) due to overlapping pastel palettes, outdoor lighting, and rapid brush techniques.
-- **Sample Scale:** While 200 paintings per artist provide sufficient data for transfer learning head adaptation, fine-grained differentiation of subtle artist periods (e.g., Picasso's Blue vs. Cubist periods) requires larger, period-annotated corpuses.
-- **Color Normalization:** Variations in photographic illumination and museum digitization equipment can influence color histogram features.
-- **Experimental Variation:** Training results and exact metric values may vary slightly depending on library versions, CPU architecture, non-deterministic operations, and dataset revisions.
-
-### Troubleshooting Common Issues
-
-1. **Port 8501 is already in use:**
-   - If port 8501 is occupied by an earlier session, specify an alternate port:
-     ```cmd
-     .venv\Scripts\python.exe -m streamlit run src/app.py --server.address 127.0.0.1 --server.port 8502
-     ```
-2. **Python Launcher (`py`) not recognized:**
-   - If `py -3.12` fails, `setup.cmd` automatically falls back to `python`. Ensure Python 3.10+ is checked in your system PATH.
-3. **PyTorch CUDA warnings on GPU machines:**
-   - The setup explicitly pins PyTorch CPU wheels for lightweight, zero-configuration execution. To leverage an NVIDIA GPU, reinstall torch with CUDA support using official PyTorch index instructions.
+  Albrecht Dürer, Alfred Sisley, Edgar Degas, Francisco Goya, Pablo Picasso, Paul Gauguin, Pierre-Auguste Renoir, Rembrandt, Titian, Vincent van Gogh.
+- **Licensing Context:** The underlying historical paintings were created between the 15th and early 20th centuries. The digitized reproductions in this collection are shared under CC BY-NC-SA 4.0 for non-commercial research and educational purposes. It remains an unsettled legal question whether trained machine learning weights qualify as adapted material / derivative works under CC BY-NC-SA 4.0 or non-copyrightable statistical parameters. Consequently, retaining these model checkpoints in this repository is intended strictly for private academic course evaluation, and any future public or commercial redistribution requires separate licensing review.

@@ -1,0 +1,2069 @@
+{
+  "evaluation_split": "held_out_test (N=200 paintings, strictly 20 per artist, untouched during training/tuning)",
+  "timestamp": "2026-10-13 12:04:34",
+  "class_labels": [
+    "Albrecht_Durer",
+    "Alfred_Sisley",
+    "Edgar_Degas",
+    "Francisco_Goya",
+    "Pablo_Picasso",
+    "Paul_Gauguin",
+    "Pierre-Auguste_Renoir",
+    "Rembrandt",
+    "Titian",
+    "Vincent_van_Gogh"
+  ],
+  "summary": {
+    "baseline_model": {
+      "name": "ResNet-18 (Frozen Backbone, Linear Head Only)",
+      "checkpoint": "C:\\Users\\Aarav\\Documents\\Studies\\Sem5\\Assignments\\Machine_Learning\\Final\\models\\cnn_best.pth",
+      "accuracy": 0.705,
+      "macro_f1": 0.6987746891189062,
+      "macro_precision": 0.7171613123718388,
+      "macro_recall": 0.7050000000000001,
+      "correct_count": 141,
+      "incorrect_count": 59,
+      "vg_precision": 0.5416666666666666,
+      "vg_recall": 0.65,
+      "vg_f1": 0.5909090909090909,
+      "timing": {
+        "mean_latency_ms": 42.447762999436236,
+        "median_latency_ms": 40.778349997708574,
+        "p95_latency_ms": 56.30129499404574,
+        "std_latency_ms": 7.802028185993465
+      }
+    },
+    "finetuned_model": {
+      "name": "ResNet-18 (Layer 4 + Linear Head Fine-Tuned)",
+      "checkpoint": "C:\\Users\\Aarav\\Documents\\Studies\\Sem5\\Assignments\\Machine_Learning\\Final\\models\\experiments\\cnn_layer4_finetune.pth",
+      "best_epoch": 10,
+      "accuracy": 0.82,
+      "macro_f1": 0.820021342633666,
+      "macro_precision": 0.8359857397504455,
+      "macro_recall": 0.82,
+      "correct_count": 164,
+      "incorrect_count": 36,
+      "vg_precision": 0.6428571428571429,
+      "vg_recall": 0.9,
+      "vg_f1": 0.75,
+      "timing": {
+        "mean_latency_ms": 39.56318349963112,
+        "median_latency_ms": 38.31334999995306,
+        "p95_latency_ms": 53.500610006449264,
+        "std_latency_ms": 6.107802552834637
+      }
+    },
+    "deltas": {
+      "accuracy_delta_percent": 11.5,
+      "macro_f1_delta": 0.1212,
+      "macro_precision_delta": 0.1188,
+      "macro_recall_delta": 0.115,
+      "vg_recall_delta": 25.0,
+      "vg_f1_delta": 0.1591
+    }
+  },
+  "statistical_testing": {
+    "contingency_table": {
+      "both_correct_n11": 136,
+      "both_incorrect_n00": 31,
+      "baseline_incorrect_finetuned_correct_n01": 28,
+      "baseline_correct_finetuned_incorrect_n10": 5,
+      "net_correct_gain": 23
+    },
+    "mcnemar_test": {
+      "statistic_chi2_corrected": 14.666666666666666,
+      "p_value_chi2": 0.00012829517819534786,
+      "p_value_exact_binomial": 6.618769839406013e-05,
+      "statistically_significant_at_alpha_0_05": true
+    },
+    "bootstrap_95_ci": {
+      "bootstrap_rounds": 10000,
+      "delta_accuracy": {
+        "point_estimate": 0.11499999999999999,
+        "ci_lower_2_5": 0.06000000000000005,
+        "ci_upper_97_5": 0.17000000000000004,
+        "ci_excludes_zero": true
+      },
+      "delta_macro_f1": {
+        "point_estimate": 0.12124665351475983,
+        "ci_lower_2_5": 0.06790666350931404,
+        "ci_upper_97_5": 0.17892158664479638,
+        "ci_excludes_zero": true
+      }
+    }
+  },
+  "per_artist_comparison": {
+    "Albrecht_Durer": {
+      "support": 20,
+      "baseline": {
+        "precision": 0.8571428571428571,
+        "recall": 0.9,
+        "f1_score": 0.8780487804878049,
+        "support": 20
+      },
+      "finetuned": {
+        "precision": 1.0,
+        "recall": 0.85,
+        "f1_score": 0.918918918918919,
+        "support": 20
+      },
+      "f1_delta": 0.0409,
+      "recall_delta": -0.05
+    },
+    "Alfred_Sisley": {
+      "support": 20,
+      "baseline": {
+        "precision": 0.8181818181818182,
+        "recall": 0.9,
+        "f1_score": 0.8571428571428571,
+        "support": 20
+      },
+      "finetuned": {
+        "precision": 0.8636363636363636,
+        "recall": 0.95,
+        "f1_score": 0.9047619047619048,
+        "support": 20
+      },
+      "f1_delta": 0.0476,
+      "recall_delta": 0.05
+    },
+    "Edgar_Degas": {
+      "support": 20,
+      "baseline": {
+        "precision": 0.64,
+        "recall": 0.8,
+        "f1_score": 0.7111111111111111,
+        "support": 20
+      },
+      "finetuned": {
+        "precision": 0.8571428571428571,
+        "recall": 0.9,
+        "f1_score": 0.8780487804878049,
+        "support": 20
+      },
+      "f1_delta": 0.1669,
+      "recall_delta": 0.1
+    },
+    "Francisco_Goya": {
+      "support": 20,
+      "baseline": {
+        "precision": 0.625,
+        "recall": 0.5,
+        "f1_score": 0.5555555555555556,
+        "support": 20
+      },
+      "finetuned": {
+        "precision": 0.8666666666666667,
+        "recall": 0.65,
+        "f1_score": 0.7428571428571429,
+        "support": 20
+      },
+      "f1_delta": 0.1873,
+      "recall_delta": 0.15
+    },
+    "Pablo_Picasso": {
+      "support": 20,
+      "baseline": {
+        "precision": 0.6842105263157895,
+        "recall": 0.65,
+        "f1_score": 0.6666666666666666,
+        "support": 20
+      },
+      "finetuned": {
+        "precision": 0.7647058823529411,
+        "recall": 0.65,
+        "f1_score": 0.7027027027027027,
+        "support": 20
+      },
+      "f1_delta": 0.036,
+      "recall_delta": 0.0
+    },
+    "Paul_Gauguin": {
+      "support": 20,
+      "baseline": {
+        "precision": 0.6363636363636364,
+        "recall": 0.35,
+        "f1_score": 0.45161290322580644,
+        "support": 20
+      },
+      "finetuned": {
+        "precision": 0.8666666666666667,
+        "recall": 0.65,
+        "f1_score": 0.7428571428571429,
+        "support": 20
+      },
+      "f1_delta": 0.2912,
+      "recall_delta": 0.3
+    },
+    "Pierre-Auguste_Renoir": {
+      "support": 20,
+      "baseline": {
+        "precision": 0.7619047619047619,
+        "recall": 0.8,
+        "f1_score": 0.7804878048780488,
+        "support": 20
+      },
+      "finetuned": {
+        "precision": 0.8181818181818182,
+        "recall": 0.9,
+        "f1_score": 0.8571428571428571,
+        "support": 20
+      },
+      "f1_delta": 0.0767,
+      "recall_delta": 0.1
+    },
+    "Rembrandt": {
+      "support": 20,
+      "baseline": {
+        "precision": 1.0,
+        "recall": 0.65,
+        "f1_score": 0.7878787878787878,
+        "support": 20
+      },
+      "finetuned": {
+        "precision": 1.0,
+        "recall": 0.9,
+        "f1_score": 0.9473684210526315,
+        "support": 20
+      },
+      "f1_delta": 0.1595,
+      "recall_delta": 0.25
+    },
+    "Titian": {
+      "support": 20,
+      "baseline": {
+        "precision": 0.6071428571428571,
+        "recall": 0.85,
+        "f1_score": 0.7083333333333334,
+        "support": 20
+      },
+      "finetuned": {
+        "precision": 0.68,
+        "recall": 0.85,
+        "f1_score": 0.7555555555555555,
+        "support": 20
+      },
+      "f1_delta": 0.0472,
+      "recall_delta": 0.0
+    },
+    "Vincent_van_Gogh": {
+      "support": 20,
+      "baseline": {
+        "precision": 0.5416666666666666,
+        "recall": 0.65,
+        "f1_score": 0.5909090909090909,
+        "support": 20
+      },
+      "finetuned": {
+        "precision": 0.6428571428571429,
+        "recall": 0.9,
+        "f1_score": 0.75,
+        "support": 20
+      },
+      "f1_delta": 0.1591,
+      "recall_delta": 0.25
+    }
+  },
+  "per_image_predictions": [
+    {
+      "rel_path": "data/raw/Albrecht_Durer/Albrecht_Durer_145.jpg",
+      "filename": "Albrecht_Durer_145.jpg",
+      "true_artist": "Albrecht_Durer",
+      "baseline_pred": "Albrecht_Durer",
+      "baseline_correct": true,
+      "finetuned_pred": "Albrecht_Durer",
+      "finetuned_correct": true
+    },
+    {
+      "rel_path": "data/raw/Albrecht_Durer/Albrecht_Durer_250.jpg",
+      "filename": "Albrecht_Durer_250.jpg",
+      "true_artist": "Albrecht_Durer",
+      "baseline_pred": "Albrecht_Durer",
+      "baseline_correct": true,
+      "finetuned_pred": "Pablo_Picasso",
+      "finetuned_correct": false
+    },
+    {
+      "rel_path": "data/raw/Albrecht_Durer/Albrecht_Durer_177.jpg",
+      "filename": "Albrecht_Durer_177.jpg",
+      "true_artist": "Albrecht_Durer",
+      "baseline_pred": "Albrecht_Durer",
+      "baseline_correct": true,
+      "finetuned_pred": "Albrecht_Durer",
+      "finetuned_correct": true
+    },
+    {
+      "rel_path": "data/raw/Albrecht_Durer/Albrecht_Durer_116.jpg",
+      "filename": "Albrecht_Durer_116.jpg",
+      "true_artist": "Albrecht_Durer",
+      "baseline_pred": "Albrecht_Durer",
+      "baseline_correct": true,
+      "finetuned_pred": "Albrecht_Durer",
+      "finetuned_correct": true
+    },
+    {
+      "rel_path": "data/raw/Albrecht_Durer/Albrecht_Durer_12.jpg",
+      "filename": "Albrecht_Durer_12.jpg",
+      "true_artist": "Albrecht_Durer",
+      "baseline_pred": "Albrecht_Durer",
+      "baseline_correct": true,
+      "finetuned_pred": "Albrecht_Durer",
+      "finetuned_correct": true
+    },
+    {
+      "rel_path": "data/raw/Albrecht_Durer/Albrecht_Durer_131.jpg",
+      "filename": "Albrecht_Durer_131.jpg",
+      "true_artist": "Albrecht_Durer",
+      "baseline_pred": "Albrecht_Durer",
+      "baseline_correct": true,
+      "finetuned_pred": "Albrecht_Durer",
+      "finetuned_correct": true
+    },
+    {
+      "rel_path": "data/raw/Albrecht_Durer/Albrecht_Durer_104.jpg",
+      "filename": "Albrecht_Durer_104.jpg",
+      "true_artist": "Albrecht_Durer",
+      "baseline_pred": "Albrecht_Durer",
+      "baseline_correct": true,
+      "finetuned_pred": "Albrecht_Durer",
+      "finetuned_correct": true
+    },
+    {
+      "rel_path": "data/raw/Albrecht_Durer/Albrecht_Durer_193.jpg",
+      "filename": "Albrecht_Durer_193.jpg",
+      "true_artist": "Albrecht_Durer",
+      "baseline_pred": "Albrecht_Durer",
+      "baseline_correct": true,
+      "finetuned_pred": "Albrecht_Durer",
+      "finetuned_correct": true
+    },
+    {
+      "rel_path": "data/raw/Albrecht_Durer/Albrecht_Durer_167.jpg",
+      "filename": "Albrecht_Durer_167.jpg",
+      "true_artist": "Albrecht_Durer",
+      "baseline_pred": "Albrecht_Durer",
+      "baseline_correct": true,
+      "finetuned_pred": "Albrecht_Durer",
+      "finetuned_correct": true
+    },
+    {
+      "rel_path": "data/raw/Albrecht_Durer/Albrecht_Durer_179.jpg",
+      "filename": "Albrecht_Durer_179.jpg",
+      "true_artist": "Albrecht_Durer",
+      "baseline_pred": "Albrecht_Durer",
+      "baseline_correct": true,
+      "finetuned_pred": "Albrecht_Durer",
+      "finetuned_correct": true
+    },
+    {
+      "rel_path": "data/raw/Albrecht_Durer/Albrecht_Durer_278.jpg",
+      "filename": "Albrecht_Durer_278.jpg",
+      "true_artist": "Albrecht_Durer",
+      "baseline_pred": "Albrecht_Durer",
+      "baseline_correct": true,
+      "finetuned_pred": "Albrecht_Durer",
+      "finetuned_correct": true
+    },
+    {
+      "rel_path": "data/raw/Albrecht_Durer/Albrecht_Durer_161.jpg",
+      "filename": "Albrecht_Durer_161.jpg",
+      "true_artist": "Albrecht_Durer",
+      "baseline_pred": "Titian",
+      "baseline_correct": false,
+      "finetuned_pred": "Titian",
+      "finetuned_correct": false
+    },
+    {
+      "rel_path": "data/raw/Albrecht_Durer/Albrecht_Durer_275.jpg",
+      "filename": "Albrecht_Durer_275.jpg",
+      "true_artist": "Albrecht_Durer",
+      "baseline_pred": "Albrecht_Durer",
+      "baseline_correct": true,
+      "finetuned_pred": "Albrecht_Durer",
+      "finetuned_correct": true
+    },
+    {
+      "rel_path": "data/raw/Albrecht_Durer/Albrecht_Durer_272.jpg",
+      "filename": "Albrecht_Durer_272.jpg",
+      "true_artist": "Albrecht_Durer",
+      "baseline_pred": "Albrecht_Durer",
+      "baseline_correct": true,
+      "finetuned_pred": "Albrecht_Durer",
+      "finetuned_correct": true
+    },
+    {
+      "rel_path": "data/raw/Albrecht_Durer/Albrecht_Durer_129.jpg",
+      "filename": "Albrecht_Durer_129.jpg",
+      "true_artist": "Albrecht_Durer",
+      "baseline_pred": "Albrecht_Durer",
+      "baseline_correct": true,
+      "finetuned_pred": "Albrecht_Durer",
+      "finetuned_correct": true
+    },
+    {
+      "rel_path": "data/raw/Albrecht_Durer/Albrecht_Durer_182.jpg",
+      "filename": "Albrecht_Durer_182.jpg",
+      "true_artist": "Albrecht_Durer",
+      "baseline_pred": "Albrecht_Durer",
+      "baseline_correct": true,
+      "finetuned_pred": "Albrecht_Durer",
+      "finetuned_correct": true
+    },
+    {
+      "rel_path": "data/raw/Albrecht_Durer/Albrecht_Durer_247.jpg",
+      "filename": "Albrecht_Durer_247.jpg",
+      "true_artist": "Albrecht_Durer",
+      "baseline_pred": "Albrecht_Durer",
+      "baseline_correct": true,
+      "finetuned_pred": "Albrecht_Durer",
+      "finetuned_correct": true
+    },
+    {
+      "rel_path": "data/raw/Albrecht_Durer/Albrecht_Durer_224.jpg",
+      "filename": "Albrecht_Durer_224.jpg",
+      "true_artist": "Albrecht_Durer",
+      "baseline_pred": "Albrecht_Durer",
+      "baseline_correct": true,
+      "finetuned_pred": "Albrecht_Durer",
+      "finetuned_correct": true
+    },
+    {
+      "rel_path": "data/raw/Albrecht_Durer/Albrecht_Durer_147.jpg",
+      "filename": "Albrecht_Durer_147.jpg",
+      "true_artist": "Albrecht_Durer",
+      "baseline_pred": "Vincent_van_Gogh",
+      "baseline_correct": false,
+      "finetuned_pred": "Vincent_van_Gogh",
+      "finetuned_correct": false
+    },
+    {
+      "rel_path": "data/raw/Albrecht_Durer/Albrecht_Durer_208.jpg",
+      "filename": "Albrecht_Durer_208.jpg",
+      "true_artist": "Albrecht_Durer",
+      "baseline_pred": "Albrecht_Durer",
+      "baseline_correct": true,
+      "finetuned_pred": "Albrecht_Durer",
+      "finetuned_correct": true
+    },
+    {
+      "rel_path": "data/raw/Alfred_Sisley/Alfred_Sisley_120.jpg",
+      "filename": "Alfred_Sisley_120.jpg",
+      "true_artist": "Alfred_Sisley",
+      "baseline_pred": "Alfred_Sisley",
+      "baseline_correct": true,
+      "finetuned_pred": "Alfred_Sisley",
+      "finetuned_correct": true
+    },
+    {
+      "rel_path": "data/raw/Alfred_Sisley/Alfred_Sisley_191.jpg",
+      "filename": "Alfred_Sisley_191.jpg",
+      "true_artist": "Alfred_Sisley",
+      "baseline_pred": "Alfred_Sisley",
+      "baseline_correct": true,
+      "finetuned_pred": "Alfred_Sisley",
+      "finetuned_correct": true
+    },
+    {
+      "rel_path": "data/raw/Alfred_Sisley/Alfred_Sisley_18.jpg",
+      "filename": "Alfred_Sisley_18.jpg",
+      "true_artist": "Alfred_Sisley",
+      "baseline_pred": "Alfred_Sisley",
+      "baseline_correct": true,
+      "finetuned_pred": "Alfred_Sisley",
+      "finetuned_correct": true
+    },
+    {
+      "rel_path": "data/raw/Alfred_Sisley/Alfred_Sisley_104.jpg",
+      "filename": "Alfred_Sisley_104.jpg",
+      "true_artist": "Alfred_Sisley",
+      "baseline_pred": "Alfred_Sisley",
+      "baseline_correct": true,
+      "finetuned_pred": "Alfred_Sisley",
+      "finetuned_correct": true
+    },
+    {
+      "rel_path": "data/raw/Alfred_Sisley/Alfred_Sisley_229.jpg",
+      "filename": "Alfred_Sisley_229.jpg",
+      "true_artist": "Alfred_Sisley",
+      "baseline_pred": "Alfred_Sisley",
+      "baseline_correct": true,
+      "finetuned_pred": "Alfred_Sisley",
+      "finetuned_correct": true
+    },
+    {
+      "rel_path": "data/raw/Alfred_Sisley/Alfred_Sisley_204.jpg",
+      "filename": "Alfred_Sisley_204.jpg",
+      "true_artist": "Alfred_Sisley",
+      "baseline_pred": "Alfred_Sisley",
+      "baseline_correct": true,
+      "finetuned_pred": "Alfred_Sisley",
+      "finetuned_correct": true
+    },
+    {
+      "rel_path": "data/raw/Alfred_Sisley/Alfred_Sisley_21.jpg",
+      "filename": "Alfred_Sisley_21.jpg",
+      "true_artist": "Alfred_Sisley",
+      "baseline_pred": "Alfred_Sisley",
+      "baseline_correct": true,
+      "finetuned_pred": "Alfred_Sisley",
+      "finetuned_correct": true
+    },
+    {
+      "rel_path": "data/raw/Alfred_Sisley/Alfred_Sisley_29.jpg",
+      "filename": "Alfred_Sisley_29.jpg",
+      "true_artist": "Alfred_Sisley",
+      "baseline_pred": "Alfred_Sisley",
+      "baseline_correct": true,
+      "finetuned_pred": "Alfred_Sisley",
+      "finetuned_correct": true
+    },
+    {
+      "rel_path": "data/raw/Alfred_Sisley/Alfred_Sisley_205.jpg",
+      "filename": "Alfred_Sisley_205.jpg",
+      "true_artist": "Alfred_Sisley",
+      "baseline_pred": "Alfred_Sisley",
+      "baseline_correct": true,
+      "finetuned_pred": "Alfred_Sisley",
+      "finetuned_correct": true
+    },
+    {
+      "rel_path": "data/raw/Alfred_Sisley/Alfred_Sisley_240.jpg",
+      "filename": "Alfred_Sisley_240.jpg",
+      "true_artist": "Alfred_Sisley",
+      "baseline_pred": "Alfred_Sisley",
+      "baseline_correct": true,
+      "finetuned_pred": "Alfred_Sisley",
+      "finetuned_correct": true
+    },
+    {
+      "rel_path": "data/raw/Alfred_Sisley/Alfred_Sisley_146.jpg",
+      "filename": "Alfred_Sisley_146.jpg",
+      "true_artist": "Alfred_Sisley",
+      "baseline_pred": "Vincent_van_Gogh",
+      "baseline_correct": false,
+      "finetuned_pred": "Alfred_Sisley",
+      "finetuned_correct": true
+    },
+    {
+      "rel_path": "data/raw/Alfred_Sisley/Alfred_Sisley_1.jpg",
+      "filename": "Alfred_Sisley_1.jpg",
+      "true_artist": "Alfred_Sisley",
+      "baseline_pred": "Alfred_Sisley",
+      "baseline_correct": true,
+      "finetuned_pred": "Alfred_Sisley",
+      "finetuned_correct": true
+    },
+    {
+      "rel_path": "data/raw/Alfred_Sisley/Alfred_Sisley_200.jpg",
+      "filename": "Alfred_Sisley_200.jpg",
+      "true_artist": "Alfred_Sisley",
+      "baseline_pred": "Alfred_Sisley",
+      "baseline_correct": true,
+      "finetuned_pred": "Alfred_Sisley",
+      "finetuned_correct": true
+    },
+    {
+      "rel_path": "data/raw/Alfred_Sisley/Alfred_Sisley_175.jpg",
+      "filename": "Alfred_Sisley_175.jpg",
+      "true_artist": "Alfred_Sisley",
+      "baseline_pred": "Alfred_Sisley",
+      "baseline_correct": true,
+      "finetuned_pred": "Alfred_Sisley",
+      "finetuned_correct": true
+    },
+    {
+      "rel_path": "data/raw/Alfred_Sisley/Alfred_Sisley_218.jpg",
+      "filename": "Alfred_Sisley_218.jpg",
+      "true_artist": "Alfred_Sisley",
+      "baseline_pred": "Alfred_Sisley",
+      "baseline_correct": true,
+      "finetuned_pred": "Alfred_Sisley",
+      "finetuned_correct": true
+    },
+    {
+      "rel_path": "data/raw/Alfred_Sisley/Alfred_Sisley_252.jpg",
+      "filename": "Alfred_Sisley_252.jpg",
+      "true_artist": "Alfred_Sisley",
+      "baseline_pred": "Alfred_Sisley",
+      "baseline_correct": true,
+      "finetuned_pred": "Alfred_Sisley",
+      "finetuned_correct": true
+    },
+    {
+      "rel_path": "data/raw/Alfred_Sisley/Alfred_Sisley_102.jpg",
+      "filename": "Alfred_Sisley_102.jpg",
+      "true_artist": "Alfred_Sisley",
+      "baseline_pred": "Alfred_Sisley",
+      "baseline_correct": true,
+      "finetuned_pred": "Alfred_Sisley",
+      "finetuned_correct": true
+    },
+    {
+      "rel_path": "data/raw/Alfred_Sisley/Alfred_Sisley_103.jpg",
+      "filename": "Alfred_Sisley_103.jpg",
+      "true_artist": "Alfred_Sisley",
+      "baseline_pred": "Alfred_Sisley",
+      "baseline_correct": true,
+      "finetuned_pred": "Alfred_Sisley",
+      "finetuned_correct": true
+    },
+    {
+      "rel_path": "data/raw/Alfred_Sisley/Alfred_Sisley_179.jpg",
+      "filename": "Alfred_Sisley_179.jpg",
+      "true_artist": "Alfred_Sisley",
+      "baseline_pred": "Alfred_Sisley",
+      "baseline_correct": true,
+      "finetuned_pred": "Paul_Gauguin",
+      "finetuned_correct": false
+    },
+    {
+      "rel_path": "data/raw/Alfred_Sisley/Alfred_Sisley_110.jpg",
+      "filename": "Alfred_Sisley_110.jpg",
+      "true_artist": "Alfred_Sisley",
+      "baseline_pred": "Pierre-Auguste_Renoir",
+      "baseline_correct": false,
+      "finetuned_pred": "Alfred_Sisley",
+      "finetuned_correct": true
+    },
+    {
+      "rel_path": "data/raw/Edgar_Degas/Edgar_Degas_145.jpg",
+      "filename": "Edgar_Degas_145.jpg",
+      "true_artist": "Edgar_Degas",
+      "baseline_pred": "Edgar_Degas",
+      "baseline_correct": true,
+      "finetuned_pred": "Edgar_Degas",
+      "finetuned_correct": true
+    },
+    {
+      "rel_path": "data/raw/Edgar_Degas/Edgar_Degas_14.jpg",
+      "filename": "Edgar_Degas_14.jpg",
+      "true_artist": "Edgar_Degas",
+      "baseline_pred": "Edgar_Degas",
+      "baseline_correct": true,
+      "finetuned_pred": "Edgar_Degas",
+      "finetuned_correct": true
+    },
+    {
+      "rel_path": "data/raw/Edgar_Degas/Edgar_Degas_134.jpg",
+      "filename": "Edgar_Degas_134.jpg",
+      "true_artist": "Edgar_Degas",
+      "baseline_pred": "Edgar_Degas",
+      "baseline_correct": true,
+      "finetuned_pred": "Edgar_Degas",
+      "finetuned_correct": true
+    },
+    {
+      "rel_path": "data/raw/Edgar_Degas/Edgar_Degas_165.jpg",
+      "filename": "Edgar_Degas_165.jpg",
+      "true_artist": "Edgar_Degas",
+      "baseline_pred": "Edgar_Degas",
+      "baseline_correct": true,
+      "finetuned_pred": "Edgar_Degas",
+      "finetuned_correct": true
+    },
+    {
+      "rel_path": "data/raw/Edgar_Degas/Edgar_Degas_109.jpg",
+      "filename": "Edgar_Degas_109.jpg",
+      "true_artist": "Edgar_Degas",
+      "baseline_pred": "Edgar_Degas",
+      "baseline_correct": true,
+      "finetuned_pred": "Edgar_Degas",
+      "finetuned_correct": true
+    },
+    {
+      "rel_path": "data/raw/Edgar_Degas/Edgar_Degas_1.jpg",
+      "filename": "Edgar_Degas_1.jpg",
+      "true_artist": "Edgar_Degas",
+      "baseline_pred": "Edgar_Degas",
+      "baseline_correct": true,
+      "finetuned_pred": "Edgar_Degas",
+      "finetuned_correct": true
+    },
+    {
+      "rel_path": "data/raw/Edgar_Degas/Edgar_Degas_169.jpg",
+      "filename": "Edgar_Degas_169.jpg",
+      "true_artist": "Edgar_Degas",
+      "baseline_pred": "Edgar_Degas",
+      "baseline_correct": true,
+      "finetuned_pred": "Edgar_Degas",
+      "finetuned_correct": true
+    },
+    {
+      "rel_path": "data/raw/Edgar_Degas/Edgar_Degas_241.jpg",
+      "filename": "Edgar_Degas_241.jpg",
+      "true_artist": "Edgar_Degas",
+      "baseline_pred": "Edgar_Degas",
+      "baseline_correct": true,
+      "finetuned_pred": "Edgar_Degas",
+      "finetuned_correct": true
+    },
+    {
+      "rel_path": "data/raw/Edgar_Degas/Edgar_Degas_16.jpg",
+      "filename": "Edgar_Degas_16.jpg",
+      "true_artist": "Edgar_Degas",
+      "baseline_pred": "Edgar_Degas",
+      "baseline_correct": true,
+      "finetuned_pred": "Edgar_Degas",
+      "finetuned_correct": true
+    },
+    {
+      "rel_path": "data/raw/Edgar_Degas/Edgar_Degas_173.jpg",
+      "filename": "Edgar_Degas_173.jpg",
+      "true_artist": "Edgar_Degas",
+      "baseline_pred": "Titian",
+      "baseline_correct": false,
+      "finetuned_pred": "Vincent_van_Gogh",
+      "finetuned_correct": false
+    },
+    {
+      "rel_path": "data/raw/Edgar_Degas/Edgar_Degas_171.jpg",
+      "filename": "Edgar_Degas_171.jpg",
+      "true_artist": "Edgar_Degas",
+      "baseline_pred": "Edgar_Degas",
+      "baseline_correct": true,
+      "finetuned_pred": "Edgar_Degas",
+      "finetuned_correct": true
+    },
+    {
+      "rel_path": "data/raw/Edgar_Degas/Edgar_Degas_264.jpg",
+      "filename": "Edgar_Degas_264.jpg",
+      "true_artist": "Edgar_Degas",
+      "baseline_pred": "Pierre-Auguste_Renoir",
+      "baseline_correct": false,
+      "finetuned_pred": "Edgar_Degas",
+      "finetuned_correct": true
+    },
+    {
+      "rel_path": "data/raw/Edgar_Degas/Edgar_Degas_148.jpg",
+      "filename": "Edgar_Degas_148.jpg",
+      "true_artist": "Edgar_Degas",
+      "baseline_pred": "Edgar_Degas",
+      "baseline_correct": true,
+      "finetuned_pred": "Edgar_Degas",
+      "finetuned_correct": true
+    },
+    {
+      "rel_path": "data/raw/Edgar_Degas/Edgar_Degas_110.jpg",
+      "filename": "Edgar_Degas_110.jpg",
+      "true_artist": "Edgar_Degas",
+      "baseline_pred": "Edgar_Degas",
+      "baseline_correct": true,
+      "finetuned_pred": "Edgar_Degas",
+      "finetuned_correct": true
+    },
+    {
+      "rel_path": "data/raw/Edgar_Degas/Edgar_Degas_163.jpg",
+      "filename": "Edgar_Degas_163.jpg",
+      "true_artist": "Edgar_Degas",
+      "baseline_pred": "Edgar_Degas",
+      "baseline_correct": true,
+      "finetuned_pred": "Edgar_Degas",
+      "finetuned_correct": true
+    },
+    {
+      "rel_path": "data/raw/Edgar_Degas/Edgar_Degas_199.jpg",
+      "filename": "Edgar_Degas_199.jpg",
+      "true_artist": "Edgar_Degas",
+      "baseline_pred": "Pablo_Picasso",
+      "baseline_correct": false,
+      "finetuned_pred": "Edgar_Degas",
+      "finetuned_correct": true
+    },
+    {
+      "rel_path": "data/raw/Edgar_Degas/Edgar_Degas_240.jpg",
+      "filename": "Edgar_Degas_240.jpg",
+      "true_artist": "Edgar_Degas",
+      "baseline_pred": "Alfred_Sisley",
+      "baseline_correct": false,
+      "finetuned_pred": "Alfred_Sisley",
+      "finetuned_correct": false
+    },
+    {
+      "rel_path": "data/raw/Edgar_Degas/Edgar_Degas_243.jpg",
+      "filename": "Edgar_Degas_243.jpg",
+      "true_artist": "Edgar_Degas",
+      "baseline_pred": "Edgar_Degas",
+      "baseline_correct": true,
+      "finetuned_pred": "Edgar_Degas",
+      "finetuned_correct": true
+    },
+    {
+      "rel_path": "data/raw/Edgar_Degas/Edgar_Degas_176.jpg",
+      "filename": "Edgar_Degas_176.jpg",
+      "true_artist": "Edgar_Degas",
+      "baseline_pred": "Edgar_Degas",
+      "baseline_correct": true,
+      "finetuned_pred": "Edgar_Degas",
+      "finetuned_correct": true
+    },
+    {
+      "rel_path": "data/raw/Edgar_Degas/Edgar_Degas_122.jpg",
+      "filename": "Edgar_Degas_122.jpg",
+      "true_artist": "Edgar_Degas",
+      "baseline_pred": "Edgar_Degas",
+      "baseline_correct": true,
+      "finetuned_pred": "Edgar_Degas",
+      "finetuned_correct": true
+    },
+    {
+      "rel_path": "data/raw/Francisco_Goya/Francisco_Goya_126.jpg",
+      "filename": "Francisco_Goya_126.jpg",
+      "true_artist": "Francisco_Goya",
+      "baseline_pred": "Francisco_Goya",
+      "baseline_correct": true,
+      "finetuned_pred": "Francisco_Goya",
+      "finetuned_correct": true
+    },
+    {
+      "rel_path": "data/raw/Francisco_Goya/Francisco_Goya_154.jpg",
+      "filename": "Francisco_Goya_154.jpg",
+      "true_artist": "Francisco_Goya",
+      "baseline_pred": "Francisco_Goya",
+      "baseline_correct": true,
+      "finetuned_pred": "Francisco_Goya",
+      "finetuned_correct": true
+    },
+    {
+      "rel_path": "data/raw/Francisco_Goya/Francisco_Goya_147.jpg",
+      "filename": "Francisco_Goya_147.jpg",
+      "true_artist": "Francisco_Goya",
+      "baseline_pred": "Titian",
+      "baseline_correct": false,
+      "finetuned_pred": "Titian",
+      "finetuned_correct": false
+    },
+    {
+      "rel_path": "data/raw/Francisco_Goya/Francisco_Goya_156.jpg",
+      "filename": "Francisco_Goya_156.jpg",
+      "true_artist": "Francisco_Goya",
+      "baseline_pred": "Titian",
+      "baseline_correct": false,
+      "finetuned_pred": "Titian",
+      "finetuned_correct": false
+    },
+    {
+      "rel_path": "data/raw/Francisco_Goya/Francisco_Goya_251.jpg",
+      "filename": "Francisco_Goya_251.jpg",
+      "true_artist": "Francisco_Goya",
+      "baseline_pred": "Vincent_van_Gogh",
+      "baseline_correct": false,
+      "finetuned_pred": "Vincent_van_Gogh",
+      "finetuned_correct": false
+    },
+    {
+      "rel_path": "data/raw/Francisco_Goya/Francisco_Goya_268.jpg",
+      "filename": "Francisco_Goya_268.jpg",
+      "true_artist": "Francisco_Goya",
+      "baseline_pred": "Francisco_Goya",
+      "baseline_correct": true,
+      "finetuned_pred": "Francisco_Goya",
+      "finetuned_correct": true
+    },
+    {
+      "rel_path": "data/raw/Francisco_Goya/Francisco_Goya_204.jpg",
+      "filename": "Francisco_Goya_204.jpg",
+      "true_artist": "Francisco_Goya",
+      "baseline_pred": "Francisco_Goya",
+      "baseline_correct": true,
+      "finetuned_pred": "Francisco_Goya",
+      "finetuned_correct": true
+    },
+    {
+      "rel_path": "data/raw/Francisco_Goya/Francisco_Goya_186.jpg",
+      "filename": "Francisco_Goya_186.jpg",
+      "true_artist": "Francisco_Goya",
+      "baseline_pred": "Francisco_Goya",
+      "baseline_correct": true,
+      "finetuned_pred": "Francisco_Goya",
+      "finetuned_correct": true
+    },
+    {
+      "rel_path": "data/raw/Francisco_Goya/Francisco_Goya_269.jpg",
+      "filename": "Francisco_Goya_269.jpg",
+      "true_artist": "Francisco_Goya",
+      "baseline_pred": "Francisco_Goya",
+      "baseline_correct": true,
+      "finetuned_pred": "Francisco_Goya",
+      "finetuned_correct": true
+    },
+    {
+      "rel_path": "data/raw/Francisco_Goya/Francisco_Goya_114.jpg",
+      "filename": "Francisco_Goya_114.jpg",
+      "true_artist": "Francisco_Goya",
+      "baseline_pred": "Francisco_Goya",
+      "baseline_correct": true,
+      "finetuned_pred": "Francisco_Goya",
+      "finetuned_correct": true
+    },
+    {
+      "rel_path": "data/raw/Francisco_Goya/Francisco_Goya_182.jpg",
+      "filename": "Francisco_Goya_182.jpg",
+      "true_artist": "Francisco_Goya",
+      "baseline_pred": "Edgar_Degas",
+      "baseline_correct": false,
+      "finetuned_pred": "Francisco_Goya",
+      "finetuned_correct": true
+    },
+    {
+      "rel_path": "data/raw/Francisco_Goya/Francisco_Goya_175.jpg",
+      "filename": "Francisco_Goya_175.jpg",
+      "true_artist": "Francisco_Goya",
+      "baseline_pred": "Titian",
+      "baseline_correct": false,
+      "finetuned_pred": "Francisco_Goya",
+      "finetuned_correct": true
+    },
+    {
+      "rel_path": "data/raw/Francisco_Goya/Francisco_Goya_173.jpg",
+      "filename": "Francisco_Goya_173.jpg",
+      "true_artist": "Francisco_Goya",
+      "baseline_pred": "Francisco_Goya",
+      "baseline_correct": true,
+      "finetuned_pred": "Francisco_Goya",
+      "finetuned_correct": true
+    },
+    {
+      "rel_path": "data/raw/Francisco_Goya/Francisco_Goya_199.jpg",
+      "filename": "Francisco_Goya_199.jpg",
+      "true_artist": "Francisco_Goya",
+      "baseline_pred": "Pablo_Picasso",
+      "baseline_correct": false,
+      "finetuned_pred": "Pablo_Picasso",
+      "finetuned_correct": false
+    },
+    {
+      "rel_path": "data/raw/Francisco_Goya/Francisco_Goya_209.jpg",
+      "filename": "Francisco_Goya_209.jpg",
+      "true_artist": "Francisco_Goya",
+      "baseline_pred": "Titian",
+      "baseline_correct": false,
+      "finetuned_pred": "Titian",
+      "finetuned_correct": false
+    },
+    {
+      "rel_path": "data/raw/Francisco_Goya/Francisco_Goya_165.jpg",
+      "filename": "Francisco_Goya_165.jpg",
+      "true_artist": "Francisco_Goya",
+      "baseline_pred": "Francisco_Goya",
+      "baseline_correct": true,
+      "finetuned_pred": "Francisco_Goya",
+      "finetuned_correct": true
+    },
+    {
+      "rel_path": "data/raw/Francisco_Goya/Francisco_Goya_108.jpg",
+      "filename": "Francisco_Goya_108.jpg",
+      "true_artist": "Francisco_Goya",
+      "baseline_pred": "Francisco_Goya",
+      "baseline_correct": true,
+      "finetuned_pred": "Francisco_Goya",
+      "finetuned_correct": true
+    },
+    {
+      "rel_path": "data/raw/Francisco_Goya/Francisco_Goya_168.jpg",
+      "filename": "Francisco_Goya_168.jpg",
+      "true_artist": "Francisco_Goya",
+      "baseline_pred": "Edgar_Degas",
+      "baseline_correct": false,
+      "finetuned_pred": "Edgar_Degas",
+      "finetuned_correct": false
+    },
+    {
+      "rel_path": "data/raw/Francisco_Goya/Francisco_Goya_273.jpg",
+      "filename": "Francisco_Goya_273.jpg",
+      "true_artist": "Francisco_Goya",
+      "baseline_pred": "Edgar_Degas",
+      "baseline_correct": false,
+      "finetuned_pred": "Edgar_Degas",
+      "finetuned_correct": false
+    },
+    {
+      "rel_path": "data/raw/Francisco_Goya/Francisco_Goya_22.jpg",
+      "filename": "Francisco_Goya_22.jpg",
+      "true_artist": "Francisco_Goya",
+      "baseline_pred": "Edgar_Degas",
+      "baseline_correct": false,
+      "finetuned_pred": "Francisco_Goya",
+      "finetuned_correct": true
+    },
+    {
+      "rel_path": "data/raw/Pablo_Picasso/Pablo_Picasso_240.jpg",
+      "filename": "Pablo_Picasso_240.jpg",
+      "true_artist": "Pablo_Picasso",
+      "baseline_pred": "Pablo_Picasso",
+      "baseline_correct": true,
+      "finetuned_pred": "Pablo_Picasso",
+      "finetuned_correct": true
+    },
+    {
+      "rel_path": "data/raw/Pablo_Picasso/Pablo_Picasso_250.jpg",
+      "filename": "Pablo_Picasso_250.jpg",
+      "true_artist": "Pablo_Picasso",
+      "baseline_pred": "Pablo_Picasso",
+      "baseline_correct": true,
+      "finetuned_pred": "Pablo_Picasso",
+      "finetuned_correct": true
+    },
+    {
+      "rel_path": "data/raw/Pablo_Picasso/Pablo_Picasso_109.jpg",
+      "filename": "Pablo_Picasso_109.jpg",
+      "true_artist": "Pablo_Picasso",
+      "baseline_pred": "Paul_Gauguin",
+      "baseline_correct": false,
+      "finetuned_pred": "Vincent_van_Gogh",
+      "finetuned_correct": false
+    },
+    {
+      "rel_path": "data/raw/Pablo_Picasso/Pablo_Picasso_174.jpg",
+      "filename": "Pablo_Picasso_174.jpg",
+      "true_artist": "Pablo_Picasso",
+      "baseline_pred": "Titian",
+      "baseline_correct": false,
+      "finetuned_pred": "Pablo_Picasso",
+      "finetuned_correct": true
+    },
+    {
+      "rel_path": "data/raw/Pablo_Picasso/Pablo_Picasso_264.jpg",
+      "filename": "Pablo_Picasso_264.jpg",
+      "true_artist": "Pablo_Picasso",
+      "baseline_pred": "Pablo_Picasso",
+      "baseline_correct": true,
+      "finetuned_pred": "Pablo_Picasso",
+      "finetuned_correct": true
+    },
+    {
+      "rel_path": "data/raw/Pablo_Picasso/Pablo_Picasso_185.jpg",
+      "filename": "Pablo_Picasso_185.jpg",
+      "true_artist": "Pablo_Picasso",
+      "baseline_pred": "Paul_Gauguin",
+      "baseline_correct": false,
+      "finetuned_pred": "Alfred_Sisley",
+      "finetuned_correct": false
+    },
+    {
+      "rel_path": "data/raw/Pablo_Picasso/Pablo_Picasso_247.jpg",
+      "filename": "Pablo_Picasso_247.jpg",
+      "true_artist": "Pablo_Picasso",
+      "baseline_pred": "Pablo_Picasso",
+      "baseline_correct": true,
+      "finetuned_pred": "Pablo_Picasso",
+      "finetuned_correct": true
+    },
+    {
+      "rel_path": "data/raw/Pablo_Picasso/Pablo_Picasso_238.jpg",
+      "filename": "Pablo_Picasso_238.jpg",
+      "true_artist": "Pablo_Picasso",
+      "baseline_pred": "Vincent_van_Gogh",
+      "baseline_correct": false,
+      "finetuned_pred": "Vincent_van_Gogh",
+      "finetuned_correct": false
+    },
+    {
+      "rel_path": "data/raw/Pablo_Picasso/Pablo_Picasso_226.jpg",
+      "filename": "Pablo_Picasso_226.jpg",
+      "true_artist": "Pablo_Picasso",
+      "baseline_pred": "Pablo_Picasso",
+      "baseline_correct": true,
+      "finetuned_pred": "Pablo_Picasso",
+      "finetuned_correct": true
+    },
+    {
+      "rel_path": "data/raw/Pablo_Picasso/Pablo_Picasso_277.jpg",
+      "filename": "Pablo_Picasso_277.jpg",
+      "true_artist": "Pablo_Picasso",
+      "baseline_pred": "Pablo_Picasso",
+      "baseline_correct": true,
+      "finetuned_pred": "Pablo_Picasso",
+      "finetuned_correct": true
+    },
+    {
+      "rel_path": "data/raw/Pablo_Picasso/Pablo_Picasso_255.jpg",
+      "filename": "Pablo_Picasso_255.jpg",
+      "true_artist": "Pablo_Picasso",
+      "baseline_pred": "Pablo_Picasso",
+      "baseline_correct": true,
+      "finetuned_pred": "Pablo_Picasso",
+      "finetuned_correct": true
+    },
+    {
+      "rel_path": "data/raw/Pablo_Picasso/Pablo_Picasso_209.jpg",
+      "filename": "Pablo_Picasso_209.jpg",
+      "true_artist": "Pablo_Picasso",
+      "baseline_pred": "Edgar_Degas",
+      "baseline_correct": false,
+      "finetuned_pred": "Edgar_Degas",
+      "finetuned_correct": false
+    },
+    {
+      "rel_path": "data/raw/Pablo_Picasso/Pablo_Picasso_180.jpg",
+      "filename": "Pablo_Picasso_180.jpg",
+      "true_artist": "Pablo_Picasso",
+      "baseline_pred": "Pablo_Picasso",
+      "baseline_correct": true,
+      "finetuned_pred": "Pablo_Picasso",
+      "finetuned_correct": true
+    },
+    {
+      "rel_path": "data/raw/Pablo_Picasso/Pablo_Picasso_170.jpg",
+      "filename": "Pablo_Picasso_170.jpg",
+      "true_artist": "Pablo_Picasso",
+      "baseline_pred": "Pablo_Picasso",
+      "baseline_correct": true,
+      "finetuned_pred": "Pierre-Auguste_Renoir",
+      "finetuned_correct": false
+    },
+    {
+      "rel_path": "data/raw/Pablo_Picasso/Pablo_Picasso_122.jpg",
+      "filename": "Pablo_Picasso_122.jpg",
+      "true_artist": "Pablo_Picasso",
+      "baseline_pred": "Pablo_Picasso",
+      "baseline_correct": true,
+      "finetuned_pred": "Pablo_Picasso",
+      "finetuned_correct": true
+    },
+    {
+      "rel_path": "data/raw/Pablo_Picasso/Pablo_Picasso_211.jpg",
+      "filename": "Pablo_Picasso_211.jpg",
+      "true_artist": "Pablo_Picasso",
+      "baseline_pred": "Pablo_Picasso",
+      "baseline_correct": true,
+      "finetuned_pred": "Pablo_Picasso",
+      "finetuned_correct": true
+    },
+    {
+      "rel_path": "data/raw/Pablo_Picasso/Pablo_Picasso_202.jpg",
+      "filename": "Pablo_Picasso_202.jpg",
+      "true_artist": "Pablo_Picasso",
+      "baseline_pred": "Vincent_van_Gogh",
+      "baseline_correct": false,
+      "finetuned_pred": "Vincent_van_Gogh",
+      "finetuned_correct": false
+    },
+    {
+      "rel_path": "data/raw/Pablo_Picasso/Pablo_Picasso_233.jpg",
+      "filename": "Pablo_Picasso_233.jpg",
+      "true_artist": "Pablo_Picasso",
+      "baseline_pred": "Pablo_Picasso",
+      "baseline_correct": true,
+      "finetuned_pred": "Pablo_Picasso",
+      "finetuned_correct": true
+    },
+    {
+      "rel_path": "data/raw/Pablo_Picasso/Pablo_Picasso_111.jpg",
+      "filename": "Pablo_Picasso_111.jpg",
+      "true_artist": "Pablo_Picasso",
+      "baseline_pred": "Francisco_Goya",
+      "baseline_correct": false,
+      "finetuned_pred": "Titian",
+      "finetuned_correct": false
+    },
+    {
+      "rel_path": "data/raw/Pablo_Picasso/Pablo_Picasso_234.jpg",
+      "filename": "Pablo_Picasso_234.jpg",
+      "true_artist": "Pablo_Picasso",
+      "baseline_pred": "Pablo_Picasso",
+      "baseline_correct": true,
+      "finetuned_pred": "Pablo_Picasso",
+      "finetuned_correct": true
+    },
+    {
+      "rel_path": "data/raw/Paul_Gauguin/Paul_Gauguin_200.jpg",
+      "filename": "Paul_Gauguin_200.jpg",
+      "true_artist": "Paul_Gauguin",
+      "baseline_pred": "Vincent_van_Gogh",
+      "baseline_correct": false,
+      "finetuned_pred": "Vincent_van_Gogh",
+      "finetuned_correct": false
+    },
+    {
+      "rel_path": "data/raw/Paul_Gauguin/Paul_Gauguin_242.jpg",
+      "filename": "Paul_Gauguin_242.jpg",
+      "true_artist": "Paul_Gauguin",
+      "baseline_pred": "Paul_Gauguin",
+      "baseline_correct": true,
+      "finetuned_pred": "Paul_Gauguin",
+      "finetuned_correct": true
+    },
+    {
+      "rel_path": "data/raw/Paul_Gauguin/Paul_Gauguin_230.jpg",
+      "filename": "Paul_Gauguin_230.jpg",
+      "true_artist": "Paul_Gauguin",
+      "baseline_pred": "Edgar_Degas",
+      "baseline_correct": false,
+      "finetuned_pred": "Paul_Gauguin",
+      "finetuned_correct": true
+    },
+    {
+      "rel_path": "data/raw/Paul_Gauguin/Paul_Gauguin_260.jpg",
+      "filename": "Paul_Gauguin_260.jpg",
+      "true_artist": "Paul_Gauguin",
+      "baseline_pred": "Pablo_Picasso",
+      "baseline_correct": false,
+      "finetuned_pred": "Pablo_Picasso",
+      "finetuned_correct": false
+    },
+    {
+      "rel_path": "data/raw/Paul_Gauguin/Paul_Gauguin_241.jpg",
+      "filename": "Paul_Gauguin_241.jpg",
+      "true_artist": "Paul_Gauguin",
+      "baseline_pred": "Vincent_van_Gogh",
+      "baseline_correct": false,
+      "finetuned_pred": "Vincent_van_Gogh",
+      "finetuned_correct": false
+    },
+    {
+      "rel_path": "data/raw/Paul_Gauguin/Paul_Gauguin_138.jpg",
+      "filename": "Paul_Gauguin_138.jpg",
+      "true_artist": "Paul_Gauguin",
+      "baseline_pred": "Vincent_van_Gogh",
+      "baseline_correct": false,
+      "finetuned_pred": "Vincent_van_Gogh",
+      "finetuned_correct": false
+    },
+    {
+      "rel_path": "data/raw/Paul_Gauguin/Paul_Gauguin_145.jpg",
+      "filename": "Paul_Gauguin_145.jpg",
+      "true_artist": "Paul_Gauguin",
+      "baseline_pred": "Pablo_Picasso",
+      "baseline_correct": false,
+      "finetuned_pred": "Paul_Gauguin",
+      "finetuned_correct": true
+    },
+    {
+      "rel_path": "data/raw/Paul_Gauguin/Paul_Gauguin_206.jpg",
+      "filename": "Paul_Gauguin_206.jpg",
+      "true_artist": "Paul_Gauguin",
+      "baseline_pred": "Francisco_Goya",
+      "baseline_correct": false,
+      "finetuned_pred": "Pablo_Picasso",
+      "finetuned_correct": false
+    },
+    {
+      "rel_path": "data/raw/Paul_Gauguin/Paul_Gauguin_273.jpg",
+      "filename": "Paul_Gauguin_273.jpg",
+      "true_artist": "Paul_Gauguin",
+      "baseline_pred": "Paul_Gauguin",
+      "baseline_correct": true,
+      "finetuned_pred": "Paul_Gauguin",
+      "finetuned_correct": true
+    },
+    {
+      "rel_path": "data/raw/Paul_Gauguin/Paul_Gauguin_20.jpg",
+      "filename": "Paul_Gauguin_20.jpg",
+      "true_artist": "Paul_Gauguin",
+      "baseline_pred": "Paul_Gauguin",
+      "baseline_correct": true,
+      "finetuned_pred": "Paul_Gauguin",
+      "finetuned_correct": true
+    },
+    {
+      "rel_path": "data/raw/Paul_Gauguin/Paul_Gauguin_249.jpg",
+      "filename": "Paul_Gauguin_249.jpg",
+      "true_artist": "Paul_Gauguin",
+      "baseline_pred": "Paul_Gauguin",
+      "baseline_correct": true,
+      "finetuned_pred": "Paul_Gauguin",
+      "finetuned_correct": true
+    },
+    {
+      "rel_path": "data/raw/Paul_Gauguin/Paul_Gauguin_234.jpg",
+      "filename": "Paul_Gauguin_234.jpg",
+      "true_artist": "Paul_Gauguin",
+      "baseline_pred": "Vincent_van_Gogh",
+      "baseline_correct": false,
+      "finetuned_pred": "Paul_Gauguin",
+      "finetuned_correct": true
+    },
+    {
+      "rel_path": "data/raw/Paul_Gauguin/Paul_Gauguin_141.jpg",
+      "filename": "Paul_Gauguin_141.jpg",
+      "true_artist": "Paul_Gauguin",
+      "baseline_pred": "Albrecht_Durer",
+      "baseline_correct": false,
+      "finetuned_pred": "Paul_Gauguin",
+      "finetuned_correct": true
+    },
+    {
+      "rel_path": "data/raw/Paul_Gauguin/Paul_Gauguin_250.jpg",
+      "filename": "Paul_Gauguin_250.jpg",
+      "true_artist": "Paul_Gauguin",
+      "baseline_pred": "Paul_Gauguin",
+      "baseline_correct": true,
+      "finetuned_pred": "Paul_Gauguin",
+      "finetuned_correct": true
+    },
+    {
+      "rel_path": "data/raw/Paul_Gauguin/Paul_Gauguin_171.jpg",
+      "filename": "Paul_Gauguin_171.jpg",
+      "true_artist": "Paul_Gauguin",
+      "baseline_pred": "Pablo_Picasso",
+      "baseline_correct": false,
+      "finetuned_pred": "Paul_Gauguin",
+      "finetuned_correct": true
+    },
+    {
+      "rel_path": "data/raw/Paul_Gauguin/Paul_Gauguin_238.jpg",
+      "filename": "Paul_Gauguin_238.jpg",
+      "true_artist": "Paul_Gauguin",
+      "baseline_pred": "Albrecht_Durer",
+      "baseline_correct": false,
+      "finetuned_pred": "Alfred_Sisley",
+      "finetuned_correct": false
+    },
+    {
+      "rel_path": "data/raw/Paul_Gauguin/Paul_Gauguin_118.jpg",
+      "filename": "Paul_Gauguin_118.jpg",
+      "true_artist": "Paul_Gauguin",
+      "baseline_pred": "Paul_Gauguin",
+      "baseline_correct": true,
+      "finetuned_pred": "Paul_Gauguin",
+      "finetuned_correct": true
+    },
+    {
+      "rel_path": "data/raw/Paul_Gauguin/Paul_Gauguin_18.jpg",
+      "filename": "Paul_Gauguin_18.jpg",
+      "true_artist": "Paul_Gauguin",
+      "baseline_pred": "Paul_Gauguin",
+      "baseline_correct": true,
+      "finetuned_pred": "Paul_Gauguin",
+      "finetuned_correct": true
+    },
+    {
+      "rel_path": "data/raw/Paul_Gauguin/Paul_Gauguin_15.jpg",
+      "filename": "Paul_Gauguin_15.jpg",
+      "true_artist": "Paul_Gauguin",
+      "baseline_pred": "Vincent_van_Gogh",
+      "baseline_correct": false,
+      "finetuned_pred": "Paul_Gauguin",
+      "finetuned_correct": true
+    },
+    {
+      "rel_path": "data/raw/Paul_Gauguin/Paul_Gauguin_252.jpg",
+      "filename": "Paul_Gauguin_252.jpg",
+      "true_artist": "Paul_Gauguin",
+      "baseline_pred": "Pierre-Auguste_Renoir",
+      "baseline_correct": false,
+      "finetuned_pred": "Pierre-Auguste_Renoir",
+      "finetuned_correct": false
+    },
+    {
+      "rel_path": "data/raw/Pierre-Auguste_Renoir/Pierre-Auguste_Renoir_252.jpg",
+      "filename": "Pierre-Auguste_Renoir_252.jpg",
+      "true_artist": "Pierre-Auguste_Renoir",
+      "baseline_pred": "Pierre-Auguste_Renoir",
+      "baseline_correct": true,
+      "finetuned_pred": "Pierre-Auguste_Renoir",
+      "finetuned_correct": true
+    },
+    {
+      "rel_path": "data/raw/Pierre-Auguste_Renoir/Pierre-Auguste_Renoir_243.jpg",
+      "filename": "Pierre-Auguste_Renoir_243.jpg",
+      "true_artist": "Pierre-Auguste_Renoir",
+      "baseline_pred": "Alfred_Sisley",
+      "baseline_correct": false,
+      "finetuned_pred": "Pierre-Auguste_Renoir",
+      "finetuned_correct": true
+    },
+    {
+      "rel_path": "data/raw/Pierre-Auguste_Renoir/Pierre-Auguste_Renoir_253.jpg",
+      "filename": "Pierre-Auguste_Renoir_253.jpg",
+      "true_artist": "Pierre-Auguste_Renoir",
+      "baseline_pred": "Pierre-Auguste_Renoir",
+      "baseline_correct": true,
+      "finetuned_pred": "Pierre-Auguste_Renoir",
+      "finetuned_correct": true
+    },
+    {
+      "rel_path": "data/raw/Pierre-Auguste_Renoir/Pierre-Auguste_Renoir_143.jpg",
+      "filename": "Pierre-Auguste_Renoir_143.jpg",
+      "true_artist": "Pierre-Auguste_Renoir",
+      "baseline_pred": "Pierre-Auguste_Renoir",
+      "baseline_correct": true,
+      "finetuned_pred": "Pierre-Auguste_Renoir",
+      "finetuned_correct": true
+    },
+    {
+      "rel_path": "data/raw/Pierre-Auguste_Renoir/Pierre-Auguste_Renoir_261.jpg",
+      "filename": "Pierre-Auguste_Renoir_261.jpg",
+      "true_artist": "Pierre-Auguste_Renoir",
+      "baseline_pred": "Pierre-Auguste_Renoir",
+      "baseline_correct": true,
+      "finetuned_pred": "Pierre-Auguste_Renoir",
+      "finetuned_correct": true
+    },
+    {
+      "rel_path": "data/raw/Pierre-Auguste_Renoir/Pierre-Auguste_Renoir_192.jpg",
+      "filename": "Pierre-Auguste_Renoir_192.jpg",
+      "true_artist": "Pierre-Auguste_Renoir",
+      "baseline_pred": "Pierre-Auguste_Renoir",
+      "baseline_correct": true,
+      "finetuned_pred": "Pierre-Auguste_Renoir",
+      "finetuned_correct": true
+    },
+    {
+      "rel_path": "data/raw/Pierre-Auguste_Renoir/Pierre-Auguste_Renoir_225.jpg",
+      "filename": "Pierre-Auguste_Renoir_225.jpg",
+      "true_artist": "Pierre-Auguste_Renoir",
+      "baseline_pred": "Vincent_van_Gogh",
+      "baseline_correct": false,
+      "finetuned_pred": "Vincent_van_Gogh",
+      "finetuned_correct": false
+    },
+    {
+      "rel_path": "data/raw/Pierre-Auguste_Renoir/Pierre-Auguste_Renoir_202.jpg",
+      "filename": "Pierre-Auguste_Renoir_202.jpg",
+      "true_artist": "Pierre-Auguste_Renoir",
+      "baseline_pred": "Pierre-Auguste_Renoir",
+      "baseline_correct": true,
+      "finetuned_pred": "Pierre-Auguste_Renoir",
+      "finetuned_correct": true
+    },
+    {
+      "rel_path": "data/raw/Pierre-Auguste_Renoir/Pierre-Auguste_Renoir_112.jpg",
+      "filename": "Pierre-Auguste_Renoir_112.jpg",
+      "true_artist": "Pierre-Auguste_Renoir",
+      "baseline_pred": "Pierre-Auguste_Renoir",
+      "baseline_correct": true,
+      "finetuned_pred": "Pierre-Auguste_Renoir",
+      "finetuned_correct": true
+    },
+    {
+      "rel_path": "data/raw/Pierre-Auguste_Renoir/Pierre-Auguste_Renoir_100.jpg",
+      "filename": "Pierre-Auguste_Renoir_100.jpg",
+      "true_artist": "Pierre-Auguste_Renoir",
+      "baseline_pred": "Pierre-Auguste_Renoir",
+      "baseline_correct": true,
+      "finetuned_pred": "Pierre-Auguste_Renoir",
+      "finetuned_correct": true
+    },
+    {
+      "rel_path": "data/raw/Pierre-Auguste_Renoir/Pierre-Auguste_Renoir_147.jpg",
+      "filename": "Pierre-Auguste_Renoir_147.jpg",
+      "true_artist": "Pierre-Auguste_Renoir",
+      "baseline_pred": "Titian",
+      "baseline_correct": false,
+      "finetuned_pred": "Titian",
+      "finetuned_correct": false
+    },
+    {
+      "rel_path": "data/raw/Pierre-Auguste_Renoir/Pierre-Auguste_Renoir_161.jpg",
+      "filename": "Pierre-Auguste_Renoir_161.jpg",
+      "true_artist": "Pierre-Auguste_Renoir",
+      "baseline_pred": "Pierre-Auguste_Renoir",
+      "baseline_correct": true,
+      "finetuned_pred": "Pierre-Auguste_Renoir",
+      "finetuned_correct": true
+    },
+    {
+      "rel_path": "data/raw/Pierre-Auguste_Renoir/Pierre-Auguste_Renoir_172.jpg",
+      "filename": "Pierre-Auguste_Renoir_172.jpg",
+      "true_artist": "Pierre-Auguste_Renoir",
+      "baseline_pred": "Pierre-Auguste_Renoir",
+      "baseline_correct": true,
+      "finetuned_pred": "Pierre-Auguste_Renoir",
+      "finetuned_correct": true
+    },
+    {
+      "rel_path": "data/raw/Pierre-Auguste_Renoir/Pierre-Auguste_Renoir_175.jpg",
+      "filename": "Pierre-Auguste_Renoir_175.jpg",
+      "true_artist": "Pierre-Auguste_Renoir",
+      "baseline_pred": "Pierre-Auguste_Renoir",
+      "baseline_correct": true,
+      "finetuned_pred": "Pierre-Auguste_Renoir",
+      "finetuned_correct": true
+    },
+    {
+      "rel_path": "data/raw/Pierre-Auguste_Renoir/Pierre-Auguste_Renoir_214.jpg",
+      "filename": "Pierre-Auguste_Renoir_214.jpg",
+      "true_artist": "Pierre-Auguste_Renoir",
+      "baseline_pred": "Pierre-Auguste_Renoir",
+      "baseline_correct": true,
+      "finetuned_pred": "Pierre-Auguste_Renoir",
+      "finetuned_correct": true
+    },
+    {
+      "rel_path": "data/raw/Pierre-Auguste_Renoir/Pierre-Auguste_Renoir_239.jpg",
+      "filename": "Pierre-Auguste_Renoir_239.jpg",
+      "true_artist": "Pierre-Auguste_Renoir",
+      "baseline_pred": "Pierre-Auguste_Renoir",
+      "baseline_correct": true,
+      "finetuned_pred": "Pierre-Auguste_Renoir",
+      "finetuned_correct": true
+    },
+    {
+      "rel_path": "data/raw/Pierre-Auguste_Renoir/Pierre-Auguste_Renoir_15.jpg",
+      "filename": "Pierre-Auguste_Renoir_15.jpg",
+      "true_artist": "Pierre-Auguste_Renoir",
+      "baseline_pred": "Pierre-Auguste_Renoir",
+      "baseline_correct": true,
+      "finetuned_pred": "Pierre-Auguste_Renoir",
+      "finetuned_correct": true
+    },
+    {
+      "rel_path": "data/raw/Pierre-Auguste_Renoir/Pierre-Auguste_Renoir_174.jpg",
+      "filename": "Pierre-Auguste_Renoir_174.jpg",
+      "true_artist": "Pierre-Auguste_Renoir",
+      "baseline_pred": "Pierre-Auguste_Renoir",
+      "baseline_correct": true,
+      "finetuned_pred": "Pierre-Auguste_Renoir",
+      "finetuned_correct": true
+    },
+    {
+      "rel_path": "data/raw/Pierre-Auguste_Renoir/Pierre-Auguste_Renoir_279.jpg",
+      "filename": "Pierre-Auguste_Renoir_279.jpg",
+      "true_artist": "Pierre-Auguste_Renoir",
+      "baseline_pred": "Edgar_Degas",
+      "baseline_correct": false,
+      "finetuned_pred": "Pierre-Auguste_Renoir",
+      "finetuned_correct": true
+    },
+    {
+      "rel_path": "data/raw/Pierre-Auguste_Renoir/Pierre-Auguste_Renoir_230.jpg",
+      "filename": "Pierre-Auguste_Renoir_230.jpg",
+      "true_artist": "Pierre-Auguste_Renoir",
+      "baseline_pred": "Pierre-Auguste_Renoir",
+      "baseline_correct": true,
+      "finetuned_pred": "Pierre-Auguste_Renoir",
+      "finetuned_correct": true
+    },
+    {
+      "rel_path": "data/raw/Rembrandt/Rembrandt_191.jpg",
+      "filename": "Rembrandt_191.jpg",
+      "true_artist": "Rembrandt",
+      "baseline_pred": "Rembrandt",
+      "baseline_correct": true,
+      "finetuned_pred": "Rembrandt",
+      "finetuned_correct": true
+    },
+    {
+      "rel_path": "data/raw/Rembrandt/Rembrandt_103.jpg",
+      "filename": "Rembrandt_103.jpg",
+      "true_artist": "Rembrandt",
+      "baseline_pred": "Francisco_Goya",
+      "baseline_correct": false,
+      "finetuned_pred": "Rembrandt",
+      "finetuned_correct": true
+    },
+    {
+      "rel_path": "data/raw/Rembrandt/Rembrandt_107.jpg",
+      "filename": "Rembrandt_107.jpg",
+      "true_artist": "Rembrandt",
+      "baseline_pred": "Titian",
+      "baseline_correct": false,
+      "finetuned_pred": "Titian",
+      "finetuned_correct": false
+    },
+    {
+      "rel_path": "data/raw/Rembrandt/Rembrandt_248.jpg",
+      "filename": "Rembrandt_248.jpg",
+      "true_artist": "Rembrandt",
+      "baseline_pred": "Titian",
+      "baseline_correct": false,
+      "finetuned_pred": "Titian",
+      "finetuned_correct": false
+    },
+    {
+      "rel_path": "data/raw/Rembrandt/Rembrandt_26.jpg",
+      "filename": "Rembrandt_26.jpg",
+      "true_artist": "Rembrandt",
+      "baseline_pred": "Rembrandt",
+      "baseline_correct": true,
+      "finetuned_pred": "Rembrandt",
+      "finetuned_correct": true
+    },
+    {
+      "rel_path": "data/raw/Rembrandt/Rembrandt_237.jpg",
+      "filename": "Rembrandt_237.jpg",
+      "true_artist": "Rembrandt",
+      "baseline_pred": "Rembrandt",
+      "baseline_correct": true,
+      "finetuned_pred": "Rembrandt",
+      "finetuned_correct": true
+    },
+    {
+      "rel_path": "data/raw/Rembrandt/Rembrandt_111.jpg",
+      "filename": "Rembrandt_111.jpg",
+      "true_artist": "Rembrandt",
+      "baseline_pred": "Rembrandt",
+      "baseline_correct": true,
+      "finetuned_pred": "Rembrandt",
+      "finetuned_correct": true
+    },
+    {
+      "rel_path": "data/raw/Rembrandt/Rembrandt_216.jpg",
+      "filename": "Rembrandt_216.jpg",
+      "true_artist": "Rembrandt",
+      "baseline_pred": "Rembrandt",
+      "baseline_correct": true,
+      "finetuned_pred": "Rembrandt",
+      "finetuned_correct": true
+    },
+    {
+      "rel_path": "data/raw/Rembrandt/Rembrandt_252.jpg",
+      "filename": "Rembrandt_252.jpg",
+      "true_artist": "Rembrandt",
+      "baseline_pred": "Titian",
+      "baseline_correct": false,
+      "finetuned_pred": "Rembrandt",
+      "finetuned_correct": true
+    },
+    {
+      "rel_path": "data/raw/Rembrandt/Rembrandt_217.jpg",
+      "filename": "Rembrandt_217.jpg",
+      "true_artist": "Rembrandt",
+      "baseline_pred": "Alfred_Sisley",
+      "baseline_correct": false,
+      "finetuned_pred": "Rembrandt",
+      "finetuned_correct": true
+    },
+    {
+      "rel_path": "data/raw/Rembrandt/Rembrandt_183.jpg",
+      "filename": "Rembrandt_183.jpg",
+      "true_artist": "Rembrandt",
+      "baseline_pred": "Rembrandt",
+      "baseline_correct": true,
+      "finetuned_pred": "Rembrandt",
+      "finetuned_correct": true
+    },
+    {
+      "rel_path": "data/raw/Rembrandt/Rembrandt_262.jpg",
+      "filename": "Rembrandt_262.jpg",
+      "true_artist": "Rembrandt",
+      "baseline_pred": "Rembrandt",
+      "baseline_correct": true,
+      "finetuned_pred": "Rembrandt",
+      "finetuned_correct": true
+    },
+    {
+      "rel_path": "data/raw/Rembrandt/Rembrandt_258.jpg",
+      "filename": "Rembrandt_258.jpg",
+      "true_artist": "Rembrandt",
+      "baseline_pred": "Rembrandt",
+      "baseline_correct": true,
+      "finetuned_pred": "Rembrandt",
+      "finetuned_correct": true
+    },
+    {
+      "rel_path": "data/raw/Rembrandt/Rembrandt_117.jpg",
+      "filename": "Rembrandt_117.jpg",
+      "true_artist": "Rembrandt",
+      "baseline_pred": "Rembrandt",
+      "baseline_correct": true,
+      "finetuned_pred": "Rembrandt",
+      "finetuned_correct": true
+    },
+    {
+      "rel_path": "data/raw/Rembrandt/Rembrandt_173.jpg",
+      "filename": "Rembrandt_173.jpg",
+      "true_artist": "Rembrandt",
+      "baseline_pred": "Pablo_Picasso",
+      "baseline_correct": false,
+      "finetuned_pred": "Rembrandt",
+      "finetuned_correct": true
+    },
+    {
+      "rel_path": "data/raw/Rembrandt/Rembrandt_192.jpg",
+      "filename": "Rembrandt_192.jpg",
+      "true_artist": "Rembrandt",
+      "baseline_pred": "Rembrandt",
+      "baseline_correct": true,
+      "finetuned_pred": "Rembrandt",
+      "finetuned_correct": true
+    },
+    {
+      "rel_path": "data/raw/Rembrandt/Rembrandt_246.jpg",
+      "filename": "Rembrandt_246.jpg",
+      "true_artist": "Rembrandt",
+      "baseline_pred": "Rembrandt",
+      "baseline_correct": true,
+      "finetuned_pred": "Rembrandt",
+      "finetuned_correct": true
+    },
+    {
+      "rel_path": "data/raw/Rembrandt/Rembrandt_168.jpg",
+      "filename": "Rembrandt_168.jpg",
+      "true_artist": "Rembrandt",
+      "baseline_pred": "Rembrandt",
+      "baseline_correct": true,
+      "finetuned_pred": "Rembrandt",
+      "finetuned_correct": true
+    },
+    {
+      "rel_path": "data/raw/Rembrandt/Rembrandt_14.jpg",
+      "filename": "Rembrandt_14.jpg",
+      "true_artist": "Rembrandt",
+      "baseline_pred": "Edgar_Degas",
+      "baseline_correct": false,
+      "finetuned_pred": "Rembrandt",
+      "finetuned_correct": true
+    },
+    {
+      "rel_path": "data/raw/Rembrandt/Rembrandt_219.jpg",
+      "filename": "Rembrandt_219.jpg",
+      "true_artist": "Rembrandt",
+      "baseline_pred": "Rembrandt",
+      "baseline_correct": true,
+      "finetuned_pred": "Rembrandt",
+      "finetuned_correct": true
+    },
+    {
+      "rel_path": "data/raw/Titian/Titian_217.jpg",
+      "filename": "Titian_217.jpg",
+      "true_artist": "Titian",
+      "baseline_pred": "Titian",
+      "baseline_correct": true,
+      "finetuned_pred": "Titian",
+      "finetuned_correct": true
+    },
+    {
+      "rel_path": "data/raw/Titian/Titian_13.jpg",
+      "filename": "Titian_13.jpg",
+      "true_artist": "Titian",
+      "baseline_pred": "Titian",
+      "baseline_correct": true,
+      "finetuned_pred": "Titian",
+      "finetuned_correct": true
+    },
+    {
+      "rel_path": "data/raw/Titian/Titian_188.jpg",
+      "filename": "Titian_188.jpg",
+      "true_artist": "Titian",
+      "baseline_pred": "Titian",
+      "baseline_correct": true,
+      "finetuned_pred": "Titian",
+      "finetuned_correct": true
+    },
+    {
+      "rel_path": "data/raw/Titian/Titian_242.jpg",
+      "filename": "Titian_242.jpg",
+      "true_artist": "Titian",
+      "baseline_pred": "Paul_Gauguin",
+      "baseline_correct": false,
+      "finetuned_pred": "Titian",
+      "finetuned_correct": true
+    },
+    {
+      "rel_path": "data/raw/Titian/Titian_161.jpg",
+      "filename": "Titian_161.jpg",
+      "true_artist": "Titian",
+      "baseline_pred": "Pierre-Auguste_Renoir",
+      "baseline_correct": false,
+      "finetuned_pred": "Pierre-Auguste_Renoir",
+      "finetuned_correct": false
+    },
+    {
+      "rel_path": "data/raw/Titian/Titian_170.jpg",
+      "filename": "Titian_170.jpg",
+      "true_artist": "Titian",
+      "baseline_pred": "Titian",
+      "baseline_correct": true,
+      "finetuned_pred": "Titian",
+      "finetuned_correct": true
+    },
+    {
+      "rel_path": "data/raw/Titian/Titian_164.jpg",
+      "filename": "Titian_164.jpg",
+      "true_artist": "Titian",
+      "baseline_pred": "Titian",
+      "baseline_correct": true,
+      "finetuned_pred": "Titian",
+      "finetuned_correct": true
+    },
+    {
+      "rel_path": "data/raw/Titian/Titian_4.jpg",
+      "filename": "Titian_4.jpg",
+      "true_artist": "Titian",
+      "baseline_pred": "Titian",
+      "baseline_correct": true,
+      "finetuned_pred": "Titian",
+      "finetuned_correct": true
+    },
+    {
+      "rel_path": "data/raw/Titian/Titian_227.jpg",
+      "filename": "Titian_227.jpg",
+      "true_artist": "Titian",
+      "baseline_pred": "Pierre-Auguste_Renoir",
+      "baseline_correct": false,
+      "finetuned_pred": "Titian",
+      "finetuned_correct": true
+    },
+    {
+      "rel_path": "data/raw/Titian/Titian_101.jpg",
+      "filename": "Titian_101.jpg",
+      "true_artist": "Titian",
+      "baseline_pred": "Titian",
+      "baseline_correct": true,
+      "finetuned_pred": "Titian",
+      "finetuned_correct": true
+    },
+    {
+      "rel_path": "data/raw/Titian/Titian_171.jpg",
+      "filename": "Titian_171.jpg",
+      "true_artist": "Titian",
+      "baseline_pred": "Titian",
+      "baseline_correct": true,
+      "finetuned_pred": "Titian",
+      "finetuned_correct": true
+    },
+    {
+      "rel_path": "data/raw/Titian/Titian_121.jpg",
+      "filename": "Titian_121.jpg",
+      "true_artist": "Titian",
+      "baseline_pred": "Titian",
+      "baseline_correct": true,
+      "finetuned_pred": "Titian",
+      "finetuned_correct": true
+    },
+    {
+      "rel_path": "data/raw/Titian/Titian_247.jpg",
+      "filename": "Titian_247.jpg",
+      "true_artist": "Titian",
+      "baseline_pred": "Titian",
+      "baseline_correct": true,
+      "finetuned_pred": "Titian",
+      "finetuned_correct": true
+    },
+    {
+      "rel_path": "data/raw/Titian/Titian_23.jpg",
+      "filename": "Titian_23.jpg",
+      "true_artist": "Titian",
+      "baseline_pred": "Titian",
+      "baseline_correct": true,
+      "finetuned_pred": "Titian",
+      "finetuned_correct": true
+    },
+    {
+      "rel_path": "data/raw/Titian/Titian_168.jpg",
+      "filename": "Titian_168.jpg",
+      "true_artist": "Titian",
+      "baseline_pred": "Titian",
+      "baseline_correct": true,
+      "finetuned_pred": "Titian",
+      "finetuned_correct": true
+    },
+    {
+      "rel_path": "data/raw/Titian/Titian_239.jpg",
+      "filename": "Titian_239.jpg",
+      "true_artist": "Titian",
+      "baseline_pred": "Titian",
+      "baseline_correct": true,
+      "finetuned_pred": "Francisco_Goya",
+      "finetuned_correct": false
+    },
+    {
+      "rel_path": "data/raw/Titian/Titian_194.jpg",
+      "filename": "Titian_194.jpg",
+      "true_artist": "Titian",
+      "baseline_pred": "Titian",
+      "baseline_correct": true,
+      "finetuned_pred": "Titian",
+      "finetuned_correct": true
+    },
+    {
+      "rel_path": "data/raw/Titian/Titian_190.jpg",
+      "filename": "Titian_190.jpg",
+      "true_artist": "Titian",
+      "baseline_pred": "Titian",
+      "baseline_correct": true,
+      "finetuned_pred": "Titian",
+      "finetuned_correct": true
+    },
+    {
+      "rel_path": "data/raw/Titian/Titian_167.jpg",
+      "filename": "Titian_167.jpg",
+      "true_artist": "Titian",
+      "baseline_pred": "Titian",
+      "baseline_correct": true,
+      "finetuned_pred": "Titian",
+      "finetuned_correct": true
+    },
+    {
+      "rel_path": "data/raw/Titian/Titian_104.jpg",
+      "filename": "Titian_104.jpg",
+      "true_artist": "Titian",
+      "baseline_pred": "Titian",
+      "baseline_correct": true,
+      "finetuned_pred": "Pierre-Auguste_Renoir",
+      "finetuned_correct": false
+    },
+    {
+      "rel_path": "data/raw/Vincent_van_Gogh/Vincent_van_Gogh_133.jpg",
+      "filename": "Vincent_van_Gogh_133.jpg",
+      "true_artist": "Vincent_van_Gogh",
+      "baseline_pred": "Vincent_van_Gogh",
+      "baseline_correct": true,
+      "finetuned_pred": "Vincent_van_Gogh",
+      "finetuned_correct": true
+    },
+    {
+      "rel_path": "data/raw/Vincent_van_Gogh/Vincent_van_Gogh_143.jpg",
+      "filename": "Vincent_van_Gogh_143.jpg",
+      "true_artist": "Vincent_van_Gogh",
+      "baseline_pred": "Paul_Gauguin",
+      "baseline_correct": false,
+      "finetuned_pred": "Paul_Gauguin",
+      "finetuned_correct": false
+    },
+    {
+      "rel_path": "data/raw/Vincent_van_Gogh/Vincent_van_Gogh_267.jpg",
+      "filename": "Vincent_van_Gogh_267.jpg",
+      "true_artist": "Vincent_van_Gogh",
+      "baseline_pred": "Francisco_Goya",
+      "baseline_correct": false,
+      "finetuned_pred": "Vincent_van_Gogh",
+      "finetuned_correct": true
+    },
+    {
+      "rel_path": "data/raw/Vincent_van_Gogh/Vincent_van_Gogh_177.jpg",
+      "filename": "Vincent_van_Gogh_177.jpg",
+      "true_artist": "Vincent_van_Gogh",
+      "baseline_pred": "Edgar_Degas",
+      "baseline_correct": false,
+      "finetuned_pred": "Vincent_van_Gogh",
+      "finetuned_correct": true
+    },
+    {
+      "rel_path": "data/raw/Vincent_van_Gogh/Vincent_van_Gogh_136.jpg",
+      "filename": "Vincent_van_Gogh_136.jpg",
+      "true_artist": "Vincent_van_Gogh",
+      "baseline_pred": "Vincent_van_Gogh",
+      "baseline_correct": true,
+      "finetuned_pred": "Vincent_van_Gogh",
+      "finetuned_correct": true
+    },
+    {
+      "rel_path": "data/raw/Vincent_van_Gogh/Vincent_van_Gogh_190.jpg",
+      "filename": "Vincent_van_Gogh_190.jpg",
+      "true_artist": "Vincent_van_Gogh",
+      "baseline_pred": "Vincent_van_Gogh",
+      "baseline_correct": true,
+      "finetuned_pred": "Vincent_van_Gogh",
+      "finetuned_correct": true
+    },
+    {
+      "rel_path": "data/raw/Vincent_van_Gogh/Vincent_van_Gogh_245.jpg",
+      "filename": "Vincent_van_Gogh_245.jpg",
+      "true_artist": "Vincent_van_Gogh",
+      "baseline_pred": "Vincent_van_Gogh",
+      "baseline_correct": true,
+      "finetuned_pred": "Vincent_van_Gogh",
+      "finetuned_correct": true
+    },
+    {
+      "rel_path": "data/raw/Vincent_van_Gogh/Vincent_van_Gogh_147.jpg",
+      "filename": "Vincent_van_Gogh_147.jpg",
+      "true_artist": "Vincent_van_Gogh",
+      "baseline_pred": "Alfred_Sisley",
+      "baseline_correct": false,
+      "finetuned_pred": "Vincent_van_Gogh",
+      "finetuned_correct": true
+    },
+    {
+      "rel_path": "data/raw/Vincent_van_Gogh/Vincent_van_Gogh_195.jpg",
+      "filename": "Vincent_van_Gogh_195.jpg",
+      "true_artist": "Vincent_van_Gogh",
+      "baseline_pred": "Vincent_van_Gogh",
+      "baseline_correct": true,
+      "finetuned_pred": "Vincent_van_Gogh",
+      "finetuned_correct": true
+    },
+    {
+      "rel_path": "data/raw/Vincent_van_Gogh/Vincent_van_Gogh_200.jpg",
+      "filename": "Vincent_van_Gogh_200.jpg",
+      "true_artist": "Vincent_van_Gogh",
+      "baseline_pred": "Vincent_van_Gogh",
+      "baseline_correct": true,
+      "finetuned_pred": "Vincent_van_Gogh",
+      "finetuned_correct": true
+    },
+    {
+      "rel_path": "data/raw/Vincent_van_Gogh/Vincent_van_Gogh_208.jpg",
+      "filename": "Vincent_van_Gogh_208.jpg",
+      "true_artist": "Vincent_van_Gogh",
+      "baseline_pred": "Francisco_Goya",
+      "baseline_correct": false,
+      "finetuned_pred": "Vincent_van_Gogh",
+      "finetuned_correct": true
+    },
+    {
+      "rel_path": "data/raw/Vincent_van_Gogh/Vincent_van_Gogh_151.jpg",
+      "filename": "Vincent_van_Gogh_151.jpg",
+      "true_artist": "Vincent_van_Gogh",
+      "baseline_pred": "Vincent_van_Gogh",
+      "baseline_correct": true,
+      "finetuned_pred": "Vincent_van_Gogh",
+      "finetuned_correct": true
+    },
+    {
+      "rel_path": "data/raw/Vincent_van_Gogh/Vincent_van_Gogh_149.jpg",
+      "filename": "Vincent_van_Gogh_149.jpg",
+      "true_artist": "Vincent_van_Gogh",
+      "baseline_pred": "Vincent_van_Gogh",
+      "baseline_correct": true,
+      "finetuned_pred": "Vincent_van_Gogh",
+      "finetuned_correct": true
+    },
+    {
+      "rel_path": "data/raw/Vincent_van_Gogh/Vincent_van_Gogh_231.jpg",
+      "filename": "Vincent_van_Gogh_231.jpg",
+      "true_artist": "Vincent_van_Gogh",
+      "baseline_pred": "Vincent_van_Gogh",
+      "baseline_correct": true,
+      "finetuned_pred": "Vincent_van_Gogh",
+      "finetuned_correct": true
+    },
+    {
+      "rel_path": "data/raw/Vincent_van_Gogh/Vincent_van_Gogh_26.jpg",
+      "filename": "Vincent_van_Gogh_26.jpg",
+      "true_artist": "Vincent_van_Gogh",
+      "baseline_pred": "Vincent_van_Gogh",
+      "baseline_correct": true,
+      "finetuned_pred": "Vincent_van_Gogh",
+      "finetuned_correct": true
+    },
+    {
+      "rel_path": "data/raw/Vincent_van_Gogh/Vincent_van_Gogh_184.jpg",
+      "filename": "Vincent_van_Gogh_184.jpg",
+      "true_artist": "Vincent_van_Gogh",
+      "baseline_pred": "Vincent_van_Gogh",
+      "baseline_correct": true,
+      "finetuned_pred": "Vincent_van_Gogh",
+      "finetuned_correct": true
+    },
+    {
+      "rel_path": "data/raw/Vincent_van_Gogh/Vincent_van_Gogh_11.jpg",
+      "filename": "Vincent_van_Gogh_11.jpg",
+      "true_artist": "Vincent_van_Gogh",
+      "baseline_pred": "Albrecht_Durer",
+      "baseline_correct": false,
+      "finetuned_pred": "Vincent_van_Gogh",
+      "finetuned_correct": true
+    },
+    {
+      "rel_path": "data/raw/Vincent_van_Gogh/Vincent_van_Gogh_215.jpg",
+      "filename": "Vincent_van_Gogh_215.jpg",
+      "true_artist": "Vincent_van_Gogh",
+      "baseline_pred": "Vincent_van_Gogh",
+      "baseline_correct": true,
+      "finetuned_pred": "Vincent_van_Gogh",
+      "finetuned_correct": true
+    },
+    {
+      "rel_path": "data/raw/Vincent_van_Gogh/Vincent_van_Gogh_198.jpg",
+      "filename": "Vincent_van_Gogh_198.jpg",
+      "true_artist": "Vincent_van_Gogh",
+      "baseline_pred": "Francisco_Goya",
+      "baseline_correct": false,
+      "finetuned_pred": "Francisco_Goya",
+      "finetuned_correct": false
+    },
+    {
+      "rel_path": "data/raw/Vincent_van_Gogh/Vincent_van_Gogh_126.jpg",
+      "filename": "Vincent_van_Gogh_126.jpg",
+      "true_artist": "Vincent_van_Gogh",
+      "baseline_pred": "Vincent_van_Gogh",
+      "baseline_correct": true,
+      "finetuned_pred": "Vincent_van_Gogh",
+      "finetuned_correct": true
+    }
+  ]
+}

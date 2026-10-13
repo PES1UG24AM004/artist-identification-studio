@@ -1,0 +1,194 @@
+{
+  "evaluation_split": "validation (N=200 paintings, strictly disjoint from training)",
+  "summary": {
+    "baseline_cnn": {
+      "architecture": "ResNet-18 (Frozen Backbone, FC Head Only)",
+      "val_accuracy": 0.71,
+      "val_macro_f1": 0.7103111096618988,
+      "val_macro_precision": 0.726845238095238,
+      "val_macro_recall": 0.71,
+      "vg_precision": 0.5238095238095238,
+      "vg_recall": 0.55,
+      "vg_f1": 0.5365853658536586
+    },
+    "finetuned_cnn": {
+      "architecture": "ResNet-18 (Layer 4 + FC Head Fine-Tuned)",
+      "best_epoch": 10,
+      "val_accuracy": 0.81,
+      "val_macro_f1": 0.8083792698172827,
+      "val_macro_precision": 0.8212284334023463,
+      "val_macro_recall": 0.8100000000000002,
+      "vg_precision": 0.6521739130434783,
+      "vg_recall": 0.75,
+      "vg_f1": 0.6976744186046512
+    },
+    "delta": {
+      "accuracy_delta_percent": 10.0,
+      "macro_f1_delta": 0.0981,
+      "vg_recall_delta": 20.0,
+      "vg_f1_delta": 0.1611
+    }
+  },
+  "per_class_comparison": {
+    "Albrecht_Durer": {
+      "support": 20,
+      "baseline": {
+        "precision": 0.7916666666666666,
+        "recall": 0.95,
+        "f1_score": 0.8636363636363636,
+        "support": 20
+      },
+      "finetuned": {
+        "precision": 0.8260869565217391,
+        "recall": 0.95,
+        "f1_score": 0.8837209302325582,
+        "support": 20
+      },
+      "f1_delta": 0.0201
+    },
+    "Alfred_Sisley": {
+      "support": 20,
+      "baseline": {
+        "precision": 0.7142857142857143,
+        "recall": 0.75,
+        "f1_score": 0.7317073170731707,
+        "support": 20
+      },
+      "finetuned": {
+        "precision": 0.75,
+        "recall": 0.9,
+        "f1_score": 0.8181818181818182,
+        "support": 20
+      },
+      "f1_delta": 0.0865
+    },
+    "Edgar_Degas": {
+      "support": 20,
+      "baseline": {
+        "precision": 0.6666666666666666,
+        "recall": 0.7,
+        "f1_score": 0.6829268292682927,
+        "support": 20
+      },
+      "finetuned": {
+        "precision": 0.8571428571428571,
+        "recall": 0.9,
+        "f1_score": 0.8780487804878049,
+        "support": 20
+      },
+      "f1_delta": 0.1951
+    },
+    "Francisco_Goya": {
+      "support": 20,
+      "baseline": {
+        "precision": 0.8125,
+        "recall": 0.65,
+        "f1_score": 0.7222222222222222,
+        "support": 20
+      },
+      "finetuned": {
+        "precision": 0.9285714285714286,
+        "recall": 0.65,
+        "f1_score": 0.7647058823529411,
+        "support": 20
+      },
+      "f1_delta": 0.0425
+    },
+    "Pablo_Picasso": {
+      "support": 20,
+      "baseline": {
+        "precision": 0.7,
+        "recall": 0.7,
+        "f1_score": 0.7,
+        "support": 20
+      },
+      "finetuned": {
+        "precision": 0.7222222222222222,
+        "recall": 0.65,
+        "f1_score": 0.6842105263157895,
+        "support": 20
+      },
+      "f1_delta": -0.0158
+    },
+    "Paul_Gauguin": {
+      "support": 20,
+      "baseline": {
+        "precision": 0.9285714285714286,
+        "recall": 0.65,
+        "f1_score": 0.7647058823529411,
+        "support": 20
+      },
+      "finetuned": {
+        "precision": 1.0,
+        "recall": 0.7,
+        "f1_score": 0.8235294117647058,
+        "support": 20
+      },
+      "f1_delta": 0.0588
+    },
+    "Pierre-Auguste_Renoir": {
+      "support": 20,
+      "baseline": {
+        "precision": 0.8095238095238095,
+        "recall": 0.85,
+        "f1_score": 0.8292682926829268,
+        "support": 20
+      },
+      "finetuned": {
+        "precision": 0.8260869565217391,
+        "recall": 0.95,
+        "f1_score": 0.8837209302325582,
+        "support": 20
+      },
+      "f1_delta": 0.0545
+    },
+    "Rembrandt": {
+      "support": 20,
+      "baseline": {
+        "precision": 0.7857142857142857,
+        "recall": 0.55,
+        "f1_score": 0.6470588235294118,
+        "support": 20
+      },
+      "finetuned": {
+        "precision": 0.85,
+        "recall": 0.85,
+        "f1_score": 0.85,
+        "support": 20
+      },
+      "f1_delta": 0.2029
+    },
+    "Titian": {
+      "support": 20,
+      "baseline": {
+        "precision": 0.5357142857142857,
+        "recall": 0.75,
+        "f1_score": 0.625,
+        "support": 20
+      },
+      "finetuned": {
+        "precision": 0.8,
+        "recall": 0.8,
+        "f1_score": 0.8,
+        "support": 20
+      },
+      "f1_delta": 0.175
+    },
+    "Vincent_van_Gogh": {
+      "support": 20,
+      "baseline": {
+        "precision": 0.5238095238095238,
+        "recall": 0.55,
+        "f1_score": 0.5365853658536586,
+        "support": 20
+      },
+      "finetuned": {
+        "precision": 0.6521739130434783,
+        "recall": 0.75,
+        "f1_score": 0.6976744186046512,
+        "support": 20
+      },
+      "f1_delta": 0.1611
+    }
+  }
+}

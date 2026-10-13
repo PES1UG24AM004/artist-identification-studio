@@ -37,12 +37,17 @@ data/processed/**
 models/**
 !models/svm_baseline.joblib
 !models/cnn_best.pth
+!models/experiments/
+!models/experiments/**
 
 # Generated outputs & Evaluation benchmarks (Track evaluation artifacts for offline benchmark viewing)
 outputs/**
 !outputs/model_comparison.json
+!outputs/per_class_metrics_comparison.csv
 !outputs/svm_vs_cnn_confusion_matrices.png
 !outputs/per_artist_f1_comparison.png
+!outputs/experiments/
+!outputs/experiments/**
 
 # Logs
 *.log
