@@ -532,11 +532,31 @@ Get-Item models/svm_baseline.joblib, models/cnn_best.pth
 ```
 
 ### 5. Launch the Streamlit Web Application
+
+To launch Streamlit, execute via the virtual environment's Python interpreter or activate `.venv`:
+
+**Option A — Direct virtual environment launch (Recommended, works regardless of global PATH or activation):**
 ```powershell
+.\.venv\Scripts\python.exe -m streamlit run src/app.py
+```
+
+**Option B — Using the provided PowerShell runner:**
+```powershell
+.\run-demo.ps1
+```
+
+**Option C — After activating the virtual environment:**
+```powershell
+.\.venv\Scripts\Activate.ps1
 streamlit run src/app.py
 ```
-*Or execute: `run-demo.cmd`.*  
-Open your browser to: `http://localhost:8501`.
+
+*Or double-click / execute the Windows batch script:*
+```cmd
+run-demo.cmd
+```
+
+Once launched, open your web browser to: `http://127.0.0.1:8501`.
 
 ### 6. Run the Automated Test Suite
 ```powershell
