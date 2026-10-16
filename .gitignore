@@ -50,6 +50,8 @@ outputs/**
 !outputs/per_class_metrics_comparison.csv
 !outputs/svm_vs_cnn_confusion_matrices.png
 !outputs/per_artist_f1_comparison.png
+!outputs/experiments/
+!outputs/experiments/**
 
 # Logs
 *.log
