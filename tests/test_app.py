@@ -1,3 +1,5 @@
+
+
 """
 Unit and integration tests for the demonstration interface and model serving components.
 
@@ -78,6 +80,63 @@ class TestDemoInterface(unittest.TestCase):
         for artist, score in top3:
             self.assertGreaterEqual(score, 0.0)
             self.assertLessEqual(score, 1.0)
+
+    def test_cnn_horizontal_flip_tta_default_and_enabled(self):
+        """Verify default retains original behavior and TTA can be enabled and disabled cleanly."""
+        # Non-symmetric synthetic image
+        img = Image.new("RGB", (100, 100), color="white")
+        for x in range(30):
+            for y in range(100):
+                img.putpixel((x, y), (255, 0, 0))
+
+        # Default call vs use_tta=False
+        top3_default, _ = predict_cnn(img, self.cnn_model, self.cnn_idx_map)
+        top3_false, _ = predict_cnn(img, self.cnn_model, self.cnn_idx_map, use_tta=False)
+        self.assertEqual(top3_default, top3_false)
+
+        # TTA enabled call
+        top3_tta, latency_tta = predict_cnn(img, self.cnn_model, self.cnn_idx_map, use_tta=True)
+        self.assertEqual(len(top3_tta), 3)
+        self.assertGreater(latency_tta, 0.0)
+        self.assertGreaterEqual(top3_tta[0][1], top3_tta[1][1])
+        self.assertGreaterEqual(top3_tta[1][1], top3_tta[2][1])
+
+        # Verify class labels match expected classes
+        for artist, score in top3_tta:
+            self.assertGreaterEqual(score, 0.0)
+            self.assertLessEqual(score, 1.0)
+            self.assertTrue(any(artist == c.replace('_', ' ') for c in self.cnn_classes))
+
+    def test_cnn_horizontal_flip_tta_exact_averaging(self):
+        """Verify TTA exactly averages the two softmax prediction vectors."""
+        img = Image.new("RGB", (100, 100), color="blue")
+        for x in range(40):
+            for y in range(100):
+                img.putpixel((x, y), (0, 255, 0))
+
+        # 1. Manual forward pass for original view
+        rgb_img = img.convert("RGB")
+        tensor_orig = VAL_TRANSFORMS(rgb_img).unsqueeze(0)
+        with torch.no_grad():
+            probs_orig = torch.softmax(self.cnn_model(tensor_orig), dim=1)[0].numpy()
+
+        # 2. Manual forward pass for horizontally flipped view
+        flipped_img = rgb_img.transpose(Image.FLIP_LEFT_RIGHT)
+        tensor_flip = VAL_TRANSFORMS(flipped_img).unsqueeze(0)
+        with torch.no_grad():
+            probs_flip = torch.softmax(self.cnn_model(tensor_flip), dim=1)[0].numpy()
+
+        expected_probs = (probs_orig + probs_flip) / 2.0
+        expected_indices = np.argsort(expected_probs)[::-1][:3]
+        expected_top3 = [(self.cnn_idx_map[i].replace('_', ' '), float(expected_probs[i])) for i in expected_indices]
+
+        # 3. Model predict_cnn with use_tta=True
+        top3_tta, _ = predict_cnn(img, self.cnn_model, self.cnn_idx_map, use_tta=True)
+
+        self.assertEqual(len(top3_tta), 3)
+        for i in range(3):
+            self.assertEqual(top3_tta[i][0], expected_top3[i][0])
+            self.assertAlmostEqual(top3_tta[i][1], expected_top3[i][1], places=6)
 
     def test_cnn_transform_shape(self):
         """Verify validation transforms output tensor with shape (3, 224, 224)."""
