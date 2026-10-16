@@ -1,0 +1,298 @@
+{
+  "evaluation_split": "validation (N=200 paintings, 20 per artist)",
+  "results": [
+    {
+      "candidate": "1. Original Baseline (Single Crop 224)",
+      "accuracy": 0.81,
+      "macro_f1": 0.8083792698172827,
+      "macro_precision": 0.8212284334023463,
+      "macro_recall": 0.8100000000000002,
+      "correct_count": 162,
+      "mean_latency_ms": 37.52406550001979,
+      "ece": 0.10146804660558705,
+      "per_class": {
+        "Albrecht_Durer": {
+          "precision": 0.8260869565217391,
+          "recall": 0.95,
+          "f1_score": 0.8837209302325582,
+          "support": 20
+        },
+        "Alfred_Sisley": {
+          "precision": 0.75,
+          "recall": 0.9,
+          "f1_score": 0.8181818181818182,
+          "support": 20
+        },
+        "Edgar_Degas": {
+          "precision": 0.8571428571428571,
+          "recall": 0.9,
+          "f1_score": 0.8780487804878049,
+          "support": 20
+        },
+        "Francisco_Goya": {
+          "precision": 0.9285714285714286,
+          "recall": 0.65,
+          "f1_score": 0.7647058823529411,
+          "support": 20
+        },
+        "Pablo_Picasso": {
+          "precision": 0.7222222222222222,
+          "recall": 0.65,
+          "f1_score": 0.6842105263157895,
+          "support": 20
+        },
+        "Paul_Gauguin": {
+          "precision": 1.0,
+          "recall": 0.7,
+          "f1_score": 0.8235294117647058,
+          "support": 20
+        },
+        "Pierre-Auguste_Renoir": {
+          "precision": 0.8260869565217391,
+          "recall": 0.95,
+          "f1_score": 0.8837209302325582,
+          "support": 20
+        },
+        "Rembrandt": {
+          "precision": 0.85,
+          "recall": 0.85,
+          "f1_score": 0.85,
+          "support": 20
+        },
+        "Titian": {
+          "precision": 0.8,
+          "recall": 0.8,
+          "f1_score": 0.8,
+          "support": 20
+        },
+        "Vincent_van_Gogh": {
+          "precision": 0.6521739130434783,
+          "recall": 0.75,
+          "f1_score": 0.6976744186046512,
+          "support": 20
+        }
+      }
+    },
+    {
+      "candidate": "2. TTA: Horizontal Flip Average",
+      "accuracy": 0.815,
+      "macro_f1": 0.8130524305543491,
+      "macro_precision": 0.830065172522098,
+      "macro_recall": 0.8150000000000001,
+      "correct_count": 163,
+      "mean_latency_ms": 55.983049999831564,
+      "ece": 0.08751213878393174,
+      "per_class": {
+        "Albrecht_Durer": {
+          "precision": 0.8333333333333334,
+          "recall": 1.0,
+          "f1_score": 0.9090909090909091,
+          "support": 20
+        },
+        "Alfred_Sisley": {
+          "precision": 0.75,
+          "recall": 0.9,
+          "f1_score": 0.8181818181818182,
+          "support": 20
+        },
+        "Edgar_Degas": {
+          "precision": 0.8571428571428571,
+          "recall": 0.9,
+          "f1_score": 0.8780487804878049,
+          "support": 20
+        },
+        "Francisco_Goya": {
+          "precision": 1.0,
+          "recall": 0.65,
+          "f1_score": 0.7878787878787878,
+          "support": 20
+        },
+        "Pablo_Picasso": {
+          "precision": 0.7647058823529411,
+          "recall": 0.65,
+          "f1_score": 0.7027027027027027,
+          "support": 20
+        },
+        "Paul_Gauguin": {
+          "precision": 1.0,
+          "recall": 0.7,
+          "f1_score": 0.8235294117647058,
+          "support": 20
+        },
+        "Pierre-Auguste_Renoir": {
+          "precision": 0.7916666666666666,
+          "recall": 0.95,
+          "f1_score": 0.8636363636363636,
+          "support": 20
+        },
+        "Rembrandt": {
+          "precision": 0.8421052631578947,
+          "recall": 0.8,
+          "f1_score": 0.8205128205128205,
+          "support": 20
+        },
+        "Titian": {
+          "precision": 0.8095238095238095,
+          "recall": 0.85,
+          "f1_score": 0.8292682926829268,
+          "support": 20
+        },
+        "Vincent_van_Gogh": {
+          "precision": 0.6521739130434783,
+          "recall": 0.75,
+          "f1_score": 0.6976744186046512,
+          "support": 20
+        }
+      }
+    },
+    {
+      "candidate": "3. Preprocessing: Letterbox Aspect-Preserving",
+      "accuracy": 0.765,
+      "macro_f1": 0.7668789178236922,
+      "macro_precision": 0.8089926201249732,
+      "macro_recall": 0.7649999999999999,
+      "correct_count": 153,
+      "mean_latency_ms": 38.99488300012308,
+      "ece": 0.11662831351161004,
+      "per_class": {
+        "Albrecht_Durer": {
+          "precision": 0.85,
+          "recall": 0.85,
+          "f1_score": 0.85,
+          "support": 20
+        },
+        "Alfred_Sisley": {
+          "precision": 0.7307692307692307,
+          "recall": 0.95,
+          "f1_score": 0.8260869565217391,
+          "support": 20
+        },
+        "Edgar_Degas": {
+          "precision": 0.8823529411764706,
+          "recall": 0.75,
+          "f1_score": 0.8108108108108109,
+          "support": 20
+        },
+        "Francisco_Goya": {
+          "precision": 0.48717948717948717,
+          "recall": 0.95,
+          "f1_score": 0.6440677966101694,
+          "support": 20
+        },
+        "Pablo_Picasso": {
+          "precision": 0.7857142857142857,
+          "recall": 0.55,
+          "f1_score": 0.6470588235294118,
+          "support": 20
+        },
+        "Paul_Gauguin": {
+          "precision": 0.9230769230769231,
+          "recall": 0.6,
+          "f1_score": 0.7272727272727273,
+          "support": 20
+        },
+        "Pierre-Auguste_Renoir": {
+          "precision": 0.9375,
+          "recall": 0.75,
+          "f1_score": 0.8333333333333334,
+          "support": 20
+        },
+        "Rembrandt": {
+          "precision": 0.76,
+          "recall": 0.95,
+          "f1_score": 0.8444444444444444,
+          "support": 20
+        },
+        "Titian": {
+          "precision": 0.9333333333333333,
+          "recall": 0.7,
+          "f1_score": 0.8,
+          "support": 20
+        },
+        "Vincent_van_Gogh": {
+          "precision": 0.8,
+          "recall": 0.6,
+          "f1_score": 0.6857142857142857,
+          "support": 20
+        }
+      }
+    },
+    {
+      "candidate": "4. Combined: Letterbox + Horizontal Flip TTA",
+      "accuracy": 0.775,
+      "macro_f1": 0.7732920943297759,
+      "macro_precision": 0.8073621286121286,
+      "macro_recall": 0.775,
+      "correct_count": 155,
+      "mean_latency_ms": 50.05274750004901,
+      "ece": 0.10391590937972069,
+      "per_class": {
+        "Albrecht_Durer": {
+          "precision": 0.9,
+          "recall": 0.9,
+          "f1_score": 0.9,
+          "support": 20
+        },
+        "Alfred_Sisley": {
+          "precision": 0.7037037037037037,
+          "recall": 0.95,
+          "f1_score": 0.8085106382978723,
+          "support": 20
+        },
+        "Edgar_Degas": {
+          "precision": 0.8125,
+          "recall": 0.65,
+          "f1_score": 0.7222222222222222,
+          "support": 20
+        },
+        "Francisco_Goya": {
+          "precision": 0.5428571428571428,
+          "recall": 0.95,
+          "f1_score": 0.6909090909090909,
+          "support": 20
+        },
+        "Pablo_Picasso": {
+          "precision": 0.7857142857142857,
+          "recall": 0.55,
+          "f1_score": 0.6470588235294118,
+          "support": 20
+        },
+        "Paul_Gauguin": {
+          "precision": 0.9230769230769231,
+          "recall": 0.6,
+          "f1_score": 0.7272727272727273,
+          "support": 20
+        },
+        "Pierre-Auguste_Renoir": {
+          "precision": 1.0,
+          "recall": 0.9,
+          "f1_score": 0.9473684210526315,
+          "support": 20
+        },
+        "Rembrandt": {
+          "precision": 0.7307692307692307,
+          "recall": 0.95,
+          "f1_score": 0.8260869565217391,
+          "support": 20
+        },
+        "Titian": {
+          "precision": 0.875,
+          "recall": 0.7,
+          "f1_score": 0.7777777777777778,
+          "support": 20
+        },
+        "Vincent_van_Gogh": {
+          "precision": 0.8,
+          "recall": 0.6,
+          "f1_score": 0.6857142857142857,
+          "support": 20
+        }
+      }
+    }
+  ],
+  "temperature_scaling": {
+    "optimal_temperature": 1.606054687500002,
+    "uncalibrated_ece": 0.10146804660558705,
+    "calibrated_ece": 0.03227435916662218
+  }
+}

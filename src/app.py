@@ -435,13 +435,27 @@ def predict_svm(img: Image.Image, pipeline: Any, classes: List[str]) -> Tuple[Li
     return top3, latency_ms
 
 
-def predict_cnn(img: Image.Image, model: torch.nn.Module, idx_to_label: Dict[int, str]) -> Tuple[List[Tuple[str, float]], float]:
-    """Run CNN prediction on in-memory PIL image."""
+def predict_cnn(
+    img: Image.Image,
+    model: torch.nn.Module,
+    idx_to_label: Dict[int, str],
+    use_tta: bool = False
+) -> Tuple[List[Tuple[str, float]], float]:
+    """Run CNN prediction on in-memory PIL image, with optional horizontal-flip TTA."""
     t0 = time.perf_counter()
-    tensor = VAL_TRANSFORMS(img.convert("RGB")).unsqueeze(0)
+    rgb_img = img.convert("RGB")
+    tensor = VAL_TRANSFORMS(rgb_img).unsqueeze(0)
     with torch.no_grad():
         logits = model(tensor)
         probs = torch.softmax(logits, dim=1)[0].numpy()
+
+        if use_tta:
+            flipped_img = rgb_img.transpose(Image.FLIP_LEFT_RIGHT)
+            flipped_tensor = VAL_TRANSFORMS(flipped_img).unsqueeze(0)
+            flipped_logits = model(flipped_tensor)
+            flipped_probs = torch.softmax(flipped_logits, dim=1)[0].numpy()
+            probs = (probs + flipped_probs) / 2.0
+
     latency_ms = (time.perf_counter() - t0) * 1000
 
     top_indices = np.argsort(probs)[::-1][:3]
@@ -616,6 +630,12 @@ def main():
                 index=0
             )
 
+            use_tta = st.checkbox(
+                "Horizontal-Flip TTA",
+                value=False,
+                help="Averages predictions of the original and horizontally flipped painting views for ResNet-18."
+            )
+
         with col_preview:
             st.markdown('<div class="studio-section-title">Painting Preview</div>', unsafe_allow_html=True)
 
@@ -632,11 +652,12 @@ def main():
         # Execution and Results Display
         if img_to_process is not None and image_id is not None:
             # Cache predictions in session state
-            if st.session_state.get("cached_image_id") != image_id:
+            cache_key = f"{image_id}_tta_{use_tta}"
+            if st.session_state.get("cached_inference_key") != cache_key:
                 with st.spinner("Executing models on CPU..."):
                     svm_top3, svm_latency = predict_svm(img_to_process, svm_pipe, svm_classes)
-                    cnn_top3, cnn_latency = predict_cnn(img_to_process, cnn_model, cnn_idx_map)
-                    st.session_state["cached_image_id"] = image_id
+                    cnn_top3, cnn_latency = predict_cnn(img_to_process, cnn_model, cnn_idx_map, use_tta=use_tta)
+                    st.session_state["cached_inference_key"] = cache_key
                     st.session_state["cached_svm"] = (svm_top3, svm_latency)
                     st.session_state["cached_cnn"] = (cnn_top3, cnn_latency)
             else:

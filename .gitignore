@@ -26,6 +26,10 @@ htmlcov/
 *.pdf
 
 # Datasets (Prevent committing large painting images, archives, and generated splits)
+*.zip
+*.tar.gz
+*.tar
+raw.zip
 data/downloads/**
 !data/downloads/.gitkeep
 data/raw/**
